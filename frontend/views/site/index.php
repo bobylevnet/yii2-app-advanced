@@ -14,5 +14,9 @@ $this->title = 'My Yii Application';
   	    <?= $form->field($model, 'excelFiles[]')->fileInput(['multiple' => true]) ?>
    	    <button>Загрузить</button>
 		<?php ActiveForm::end()?>
+            
+            <?php 
+            echo $model->column;
+            ?>
 
 </div>

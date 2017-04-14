@@ -12,7 +12,8 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-use frontend\models\UploadForm;
+use frontend\models\UploadFormExcel;
+use frontend\models\ExcelModel;
 use yii\web\UploadedFile;
 use frontend\component\bobyii2excel\ExcelReader;
 
@@ -76,26 +77,35 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
-    	
-    	$model = new UploadForm();
-    
+    { 	
+    	$model = new UploadFormExcel();
     	if (Yii::$app->request->isPost){
     	
     		$model->excelFiles = UploadedFile::getInstances($model, 'excelFiles');	
-    		
+
     		if ($model->validate()){
-    			
-                        return $model->upload();;
-    		}
-    		
+
+                     $model->upload();
+                     
+                     
+                       return $this->render ('index',  ['model'=> $model]);
+                       
+    		}	
     	} 	
-    	
-     
     	
         return $this->render('index', ['model'=> $model]);
     }
     
+    
+    public function actionImport()
+    {
+        if (Yii::$app->request->isAjax){
+           $dt = new \app\models\Dataexcel();
+           $dt->insertData('');
+            
+        }
+        
+    }
     
     
     public function actionFileload()

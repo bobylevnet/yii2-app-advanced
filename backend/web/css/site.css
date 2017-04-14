@@ -118,3 +118,15 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+
+
+table{
+    border: #000 1px solid;
+   border-collapse: collapse;
+}
+
+   td { 
+   
+    border: 1px solid black; /* Граница вокруг ячеек */
+   }
