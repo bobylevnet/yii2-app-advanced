@@ -86,8 +86,6 @@ class SiteController extends Controller
     		if ($model->validate()){
 
                      $model->upload();
-                     
-                     
                        return $this->render ('index',  ['model'=> $model]);
                        
     		}	
@@ -100,8 +98,10 @@ class SiteController extends Controller
     public function actionImport()
     {
         if (Yii::$app->request->isAjax){
+            $request = Yii::$app->request;
+           $post = $request->post();
            $dt = new \app\models\Dataexcel();
-           $dt->insertData('');
+           $dt->insertData($post['file'], $post['cheks'],$post['basefile'],$post['comment']);
             
         }
         

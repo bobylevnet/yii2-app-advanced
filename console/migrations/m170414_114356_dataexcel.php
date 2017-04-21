@@ -6,7 +6,7 @@ class m170414_114356_dataexcel extends Migration
 {
     public function up()
     {
-            $this->createTable('dataexcel', ['id' => $this->text(),
+            $this->createTable('dataexcel', ['id' => $this->integer(),
             'column1' => $this->text(),
             'column2' => $this->text(),
             'column3' => $this->text(),

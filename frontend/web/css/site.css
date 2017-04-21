@@ -135,3 +135,7 @@ table{
     padding: 5px; /* Поля вокруг содержимого ячеек */
     border: 1px solid black; /* Граница вокруг ячеек */
    }
+   
+   .tbl img{
+       display: none;
+   }

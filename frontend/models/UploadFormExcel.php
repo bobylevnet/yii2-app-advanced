@@ -29,14 +29,16 @@ class UploadFormExcel extends Model
        
 		if ($this->validate()) {   
                     $i=0;
-                    $xlsx = new  ExcelReader();
+                    
               
                     foreach ($this->excelFiles  as $file) {
                         $i++;
+                   
                        $path = \Yii::getAlias('@app').'/upload/'. $file->baseName . '.' . $file->extension;
+                            $xlsx = new  ExcelReader($path,$file->baseName);
                        $file->saveAs($path);
                       
-                      $result[$i] = $xlsx->parseExcel($path);
+                      $result[$i] = $xlsx->parseExcel(['first'=>true]);
                   
                     }
                       $this->column  =implode($result);

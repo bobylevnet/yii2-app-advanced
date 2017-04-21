@@ -3,11 +3,13 @@
 namespace app\models;
 
 use Yii;
+use frontend\component\bobyii2excel\ExcelReader;
+
 
 /**
  * This is the model class for table "dataexcel".
  *
- * @property string $id
+ * @property integer $id
  * @property string $column1
  * @property string $column2
  * @property string $column3
@@ -49,7 +51,7 @@ class Dataexcel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'column1', 'column2', 'column3', 'column4', 'column5', 'column6', 'column7', 'column8', 'column9', 'column10', 'column11', 'column12', 'column13', 'column14', 'column15', 'column16', 'column17', 'column18', 'column19', 'column20', 'column21', 'column22', 'column23', 'column24'], 'string'],
+            [   ['column1', 'column2', 'column3', 'column4', 'column5', 'column6', 'column7', 'column8', 'column9', 'column10', 'column11', 'column12', 'column13', 'column14', 'column15', 'column16', 'column17', 'column18', 'column19', 'column20', 'column21', 'column22', 'column23', 'column24'], 'string'],
         ];
     }
 
@@ -84,21 +86,42 @@ class Dataexcel extends \yii\db\ActiveRecord
             'column22' => 'Column22',
             'column23' => 'Column23',
             'column24' => 'Column24',
+            
         ];
     }
     
     
-    public function insertData($file)
+    public function insertData($file, $cheks,$baseName,$comment)
     {
-       $dtExcel = new Dataexcel();
-       
-       foreach ($this->attributeLabels() as $key => $value)
-       {
-       $dtExcel[$key]= '1';
-       
-       
-       }
+        //таблица файлы
+       $files = new Files();  
+        //сохраняем имя файла получаем id записи       
+       $files->name = $file;
+       $files->comment = $comment;
+       $files->save();
+       $id =  $files->getPrimaryKey();  
+       //данный id будет ключем в таблице dataExcel
+        $xl = new ExcelReader($file,$baseName);
+
+        for ($i=0; $i<ExcelReader::$countRow; $i++)
+        {
+             $dtExcel = new Dataexcel();
+             $dtExcel->id = $id;
+             $arr =  $xl->parseExcel(['first'=>false,'column'=>$cheks],$baseName);
+             
+             foreach ($cheks as $key => $value)
+                {
+   
+                //чтение данных из файл
+                //парсим фа эксель выбранные поля
+                
+                 $k = $key+1;
+                 $st = (string)"column".$k;
+                 $dtExcel[$st]= $arr[1][$value];
+                }
+                
        $dtExcel->save();
+        }
         
     }
 }
