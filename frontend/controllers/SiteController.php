@@ -5,6 +5,7 @@ use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\Application;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
@@ -16,6 +17,10 @@ use frontend\models\UploadFormExcel;
 use frontend\models\ExcelModel;
 use yii\web\UploadedFile;
 use frontend\component\bobyii2excel\ExcelReader;
+use yii\data\ActiveDataProvider;
+use app\models\Files;
+use app\models\Dataexcel;
+use app\models\Templatelist;
 
 
 
@@ -24,6 +29,17 @@ use frontend\component\bobyii2excel\ExcelReader;
  */
 class SiteController extends Controller
 {
+    
+//убираем проеврку токена
+    public function init()
+    {         
+     parent::init();
+     \yii::$app->request->enableCsrfValidation =false;
+
+
+    }
+    
+    
     /**
      * @inheritdoc
      */
@@ -97,6 +113,8 @@ class SiteController extends Controller
     
     public function actionImport()
     {
+            
+        
         if (Yii::$app->request->isAjax){
             $request = Yii::$app->request;
            $post = $request->post();
@@ -108,6 +126,18 @@ class SiteController extends Controller
     }
     
     
+    public function actionShow()
+    {
+        
+        if (Yii::$app->request->isPost){
+             $request = Yii::$app->request;
+           $post = $request->post();
+           $model = Dataexcel::find()->where(["id"=>$post["id"]])->one();
+        
+        return $this->renderPartial("showf",["model"=>$model]);
+    }
+    }
+    
     public function actionFileload()
     {
         $xlsx = new ExcelReader(Yii::$app->request->get());
@@ -117,10 +147,64 @@ class SiteController extends Controller
     }
 
 
+    public function actionGet()
+    {
+        //отключаем проверку токена
+    
+        $idBills=0;
+        $idBillsf=0;
+   //if (Yii::$app->request->isPost){
+          $request = Yii::$app->request;
+           $post = $request->post();
+         
+           
+          //получаем что id счетов и счет фактур
+           $model = Files::find()->select(["id"])->where(["comment"=>"счета"])->asArray()->all();
+           $modelf = Files::find()->select(["id"])->where(["comment"=>"фактуры"])->asArray()->all();
+         
+           if (!empty($model))
+           {
+              $idBills =  $model[0]["id"];
+           }
+            if (!empty($modelf))
+           {
+           $idBillsf =  $modelf[0]["id"];
+           }
+          $kks =  trim($post["kks"]);
+          
+           
+           $rBills = Dataexcel::find()->select(["column2",  "column3"])->where(["column1"=>$kks,"id"=>$idBills])->asArray()->all();
+           $rBillsf = Dataexcel::find()->select(["column2",  "column3"])->where(["column1"=>$kks,"id"=>$idBillsf])->asArray()->all();
+           
+          \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
+          $str =  $this->arrstr($rBills);
+          $strf = $this->arrstr($rBillsf);
+        
+           return $strf . "&" . $str  ;
+           
+           
+   //}
+     
+    }
+    
+    
+    function arrstr($arr)
+    {
+        $str="";
+        foreach ($arr as $ar)
+        {
+           foreach ($ar as $key=>$value)
+           {
+             
+               $str = $str. $ar[(string)$key] . ";";
+           }
 
-   
+        }
+         return $str;
+    }
 
-    /**
+
+        /**
      * Logs in a user.
      *
      * @return mixed
@@ -181,9 +265,20 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionAbout()
+    public function actionTemplate()
     {
-        return $this->render('about');
+      
+       $dataProvider =  new ActiveDataProvider([
+            'query' =>  Files::find(),
+              'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+       
+       $templateList  = Templatelist::find()->select(['id', 'nametemplate'])->asArray()->all();
+       $model = new Templatelist();
+       
+        return $this->render('template',['listDataProvider'=>$dataProvider,'templateList'=>$templateList,'model'=>$model]);
     }
 
     /**

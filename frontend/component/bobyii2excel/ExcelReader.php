@@ -1,7 +1,7 @@
 <?php
 namespace frontend\component\bobyii2excel;
 
-use Behat\Gherkin\Exception\Exception;
+
 
 
 class ExcelReader 
@@ -49,30 +49,35 @@ class ExcelReader
                 $i=0;
 
                   $arr = array();
-                //проход по строкам
+                //РїСЂРѕС…РѕРґ РїРѕ СЃС‚СЂРѕРєР°Рј
      
                foreach (ExcelReader::$xlrows as $xlrow) {
                  
                    
                    $i++;
                 
-                 //проход по ячекам строки
+                 //РїСЂРѕС…РѕРґ РїРѕ СЏС‡РµРєР°Рј СЃС‚СЂРѕРєРё
                     foreach ($xlrow->c as $cell) {
-                    $v = (string) $cell->v;    
+                        
+                    $v = (string) $cell->v;  
+                    if( $v=="343" )
+                       {
+                        echo ""; 
+                       }
                   // $v = (string) $cell;    
-                 // Смотрим значения типа ячейки
+                 // РЎРјРѕС‚СЂРёРј Р·РЅР°С‡РµРЅРёСЏ С‚РёРїР° СЏС‡РµР№РєРё
                     // if (isset($cell['t']) && $cell['t']!='s')
                     //{                        
-                    //     echo '';
+                    //     echo '';s
                     // }
                    if (isset($cell['t'])) {
                       $s  = array();
                      $si = ExcelReader::$strings->si[(int) $v];
             
-            // Псевдоним пространства имен  
+            // РџСЃРµРІРґРѕРЅРёРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР° РёРјРµРЅ  
             $si->registerXPathNamespace('n', 'http://schemas.openxmlformats.org/spreadsheetml/2006/main');
             $node= $si->xpath('.//n:t');
-            // значение всех узлов текст
+            // Р·РЅР°С‡РµРЅРёРµ РІСЃРµС… СѓР·Р»РѕРІ С‚РµРєСЃС‚
             foreach($node as $t) {
                 $s[] = (string) $t;
             }
@@ -88,7 +93,7 @@ class ExcelReader
         
       $dom = dom_import_simplexml($xlrow);
       $dom->parentNode->removeChild($dom);
-      
+      $p = count(ExcelReader::$xlrows);
        ExcelReader::$countRow = count(ExcelReader::$xlrows);
       return $arr;
        
@@ -103,11 +108,11 @@ class ExcelReader
    function getHtml($arr,$fileExcel, $baseName)
     {
     $column = " </br> <table class='tbl'>  <tr> <td>"
-            ."<span>Файл - ".$fileExcel."</span> </br>"
-            . " <span>Описание файла</span> </br>"
+            ."<span>Р¤Р°Р№Р» - ".$fileExcel."</span> </br>"
+            . " <span>РћРїРёСЃР°РЅРёРµ С„Р°Р№Р»Р°</span> </br>"
             . " <input name='comment' type='text' > </br>"
-            . "<a  href='#'>Импорт</a> "
-            ."<img name='load' srs='common/tenor.gif'/>"
+            . "<a  href='#'>Р�РјРїРѕСЂС‚</a> </br> "
+            . "<span name='load'> </span>"
             . "<input name='pathfile' type='hidden' value='".$fileExcel."' >"
             . "<input name='namefile' type='hidden' value='".$baseName."' > </td> </tr> ";
     $ind=0;

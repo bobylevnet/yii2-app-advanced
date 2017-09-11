@@ -91,33 +91,39 @@ class Dataexcel extends \yii\db\ActiveRecord
     }
     
     
-    public function insertData($file, $cheks,$baseName,$comment)
+    public function insertData($file, $cheks, $baseName, $comment)
     {
-        //таблица файлы
-       $files = new Files();  
-        //сохраняем имя файла получаем id записи       
+       //таблица файлы
+       $files = new Files();
+ 
+       //сохраняем имя файла получаем id записи       
        $files->name = $file;
        $files->comment = $comment;
-       $files->save();
+       $files->save(); 
        $id =  $files->getPrimaryKey();  
+       
        //данный id будет ключем в таблице dataExcel
-        $xl = new ExcelReader($file,$baseName);
-
-        for ($i=0; $i<ExcelReader::$countRow; $i++)
+       $xl = new ExcelReader($file,$baseName);
+      //  $i=ExcelReader::$countRow;
+        for ($i=0; $i<ExcelReader::$countRow; )
         {
+            
+           // if ($i>158) 
+           // {
+            //    echo "";
+           // }
              $dtExcel = new Dataexcel();
              $dtExcel->id = $id;
              $arr =  $xl->parseExcel(['first'=>false,'column'=>$cheks],$baseName);
              
              foreach ($cheks as $key => $value)
                 {
-   
                 //чтение данных из файл
                 //парсим фа эксель выбранные поля
-                
                  $k = $key+1;
                  $st = (string)"column".$k;
                  $dtExcel[$st]= $arr[1][$value];
+               
                 }
                 
        $dtExcel->save();

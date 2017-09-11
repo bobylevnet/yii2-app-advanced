@@ -35,8 +35,9 @@ class UploadFormExcel extends Model
                         $i++;
                    
                        $path = \Yii::getAlias('@app').'/upload/'. $file->baseName . '.' . $file->extension;
+                             $file->saveAs($path);
                             $xlsx = new  ExcelReader($path,$file->baseName);
-                       $file->saveAs($path);
+                 
                       
                       $result[$i] = $xlsx->parseExcel(['first'=>true]);
                   

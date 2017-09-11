@@ -4,8 +4,31 @@
  * and open the template in the editor.
  */
 
-$('.tbl a').click( function () 
-{
+
+
+
+
+
+
+//отображаем заголовоки выбарнного файла
+$('.files a').click(function () {
+   var aid =  $(this).attr("id");
+    
+    var  p = $(this).parent();
+      p =  p.find(".column");
+    
+    var dt = {id:aid};
+    ajx("/site/show", dt, function (data) { p.html(data);});
+    
+    
+ 
+    
+});
+
+
+//запрос на загрузку данных в бд
+
+$('.tbl a').click( function () {
     
 var sel;
 var pole = [];
@@ -17,30 +40,46 @@ sel = $(this).parent().parent().parent();
     var nameFile =$(sel).find("input:hidden[name='namefile']").val();
     var cmnt = $(sel).find("input:text[name='comment']").val();
   
-    var im = $(sel).find("img[name='load']");
-    im.show();
+    var sp  = $(sel).find("span[name='load']");
+    sp.html('Идет загрузка');
     
  for (var i=0;i<elementCheck.length;i++)
     {
-    pole.push(elementCheck[i].value)
+         pole.push(elementCheck[i].value)
      
     }
-$.ajax({
-       url: '/site/import',
-       type: 'POST',    
-       data: {
-                file: fileSpan,
+    
+  
+var dt =  {file: fileSpan,
                 cheks: pole,
                 basefile: nameFile,
-                comment: cmnt,
-                
-    },
+                comment: cmnt};
+            
+var fnc= function (data) {
+                 sp.html('ГОТОВО');
+            };
+            
+            ajx('/site/import', dt, fnc );
+            
+
+});
+
+
+
+
+
+
+
+function ajx(url, dt, fnc) {
+    $.ajax({
+       url: url,
+       type: 'POST',    
+       data: dt,
     success: function (data)    {
         
-        im.hide();
-        alert('all ok');
+    fnc(data);
     }
        
 });
-
-});
+    
+}
