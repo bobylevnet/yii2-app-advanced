@@ -68,8 +68,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'text',
                 'filter'=>array("1"=>"open","2"=>"close")
              ],
+        	[ 'attribute'=>'nameTypeDoc',
+        		'format'=>'text',
+        	   'value' => 'typed.nameTypeDoc',
+        			
+        			
+        			
+   			 ],
+        	[ 'attribute'=>'nameMat',
+        		 
+        	'value' => 'typem.nameMat',
+            ],
             'idTypDocum',
-            'idTypeMat',
             'aboutDoc',
             // 'dateDoc',
             // 'yearDoc',

@@ -15,11 +15,14 @@ class RegisinSearch extends regisin
     /**
      * @inheritdoc
      */
+
+	public $nameTypeDoc;
+	
     public function rules()
     {
         return [
             [['idRin', 'idOrg', 'idTypDocum', 'idTypeMat', 'yearDoc', 'idUserRun', 'idUserOrg', 'listNumber', 'countList'], 'integer'],
-            [['aboutDoc', 'dateDoc', 'dateIn', 'numberIn'], 'safe'],
+            [['aboutDoc', 'dateDoc', 'dateIn', 'numberIn','typed.nameTypeDoc','typem.nameMat','nameTypeDoc'], 'safe'],
         ];
     }
 
@@ -41,13 +44,26 @@ class RegisinSearch extends regisin
      */
     public function search($params)
     {
-        $query = regisin::find();
-
+   
+    	
+    	
+    	
+        $query = regisin::find()->joinWith(['typed', 'typem']);
+   
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        
+       $dataProvider->sort->attributes['Name Type Doc'] = [
+       						'asc'=> ['typed.nameTypeDoc'=>SORT_ASC],
+       						'desc'=> ['typed.nameTypeDoc'=>SORT_DESC],
+       						];
+       		
+       
+        	
+       // }]
 
         $this->load($params);
 
@@ -56,12 +72,14 @@ class RegisinSearch extends regisin
             // $query->where('0=1');
             return $dataProvider;
         }
-
+		
+        
+        
         // grid filtering conditions
         $query->andFilterWhere([
             'idRin' => $this->idRin,
             'idOrg' => $this->idOrg,
-            'idTypDocum' => $this->idTypDocum,
+            'nameTypeDoc' => $this->idTypDocum,
             'idTypeMat' => $this->idTypeMat,
             'dateDoc' => $this->dateDoc,
             'yearDoc' => $this->yearDoc,
@@ -73,7 +91,8 @@ class RegisinSearch extends regisin
         ]);
 
         $query->andFilterWhere(['like', 'aboutDoc', $this->aboutDoc])
-            ->andFilterWhere(['like', 'numberIn', $this->numberIn]);
+            ->andFilterWhere(['like', 'numberIn', $this->numberIn])
+        	->andFilterWhere(['like', 'nameTypeDoc', $this->typed]) ;
 
         return $dataProvider;
     }

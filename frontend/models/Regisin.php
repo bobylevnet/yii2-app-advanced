@@ -40,7 +40,7 @@ class Regisin extends \yii\db\ActiveRecord
             [['yearDoc', 'idRin'],'safe'],
             [['idOrg', 'idTypDocum', 'idTypeMat', 'aboutDoc', 'dateDoc','idUserRun', 'idUserOrg', 'listNumber', 'countList', 'dateIn', 'numberIn'], 'required'],
             [['idOrg', 'idTypDocum', 'idTypeMat', 'yearDoc', 'idUserRun', 'idUserOrg', 'listNumber', 'countList'], 'integer'],
-            [['dateDoc', 'dateIn'], 'safe'],
+            [['dateDoc', 'dateIn', 'nameTypeDoc'], 'safe'],
             [['aboutDoc'], 'string', 'max' => 255],
             [['numberIn'], 'string', 'max' => 150],
         ];
@@ -54,7 +54,7 @@ class Regisin extends \yii\db\ActiveRecord
         return [
             'idRin' => 'Id Rin',
             'idOrg' => 'Id Org',
-            'idTypDocum' => 'Id Typ Docum',
+            'typeDoc' => 'Id Typ Docum',
             'idTypeMat' => 'Id Type Mat',
             'aboutDoc' => 'About Doc',
             'dateDoc' => 'Date Doc',
@@ -65,6 +65,22 @@ class Regisin extends \yii\db\ActiveRecord
             'countList' => 'Count List',
             'dateIn' => 'Date In',
             'numberIn' => 'Number In',
+        	
+    
         ];
+    }
+    
+    
+    //свзяь с тип документа
+    public function getTyped()
+    {
+    	return $this->hasOne(Typedoc::className(),['idTypDoc'=>'idTypDocum'] );
+    	
+    }
+    //связь с тип материала документа
+    public function getTypem()
+    {
+    	return $this->hasOne(Typemat::className(),['idMatDoc'=>'idTypeMat'] );
+    
     }
 }
