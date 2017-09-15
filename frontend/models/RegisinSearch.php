@@ -56,9 +56,9 @@ class RegisinSearch extends regisin
             'query' => $query,
         ]);
         
-       $dataProvider->sort->attributes['Name Type Doc'] = [
-       						'asc'=> ['typed.nameTypeDoc'=>SORT_ASC],
-       						'desc'=> ['typed.nameTypeDoc'=>SORT_DESC],
+       $dataProvider->sort->attributes['nameTypeDoc'] = [
+       						'asc'=> ['typedoc.nameTypeDoc'=>SORT_ASC],
+       						'desc'=> ['typedoc.nameTypeDoc'=>SORT_DESC],
        						];
        		
        
@@ -79,7 +79,7 @@ class RegisinSearch extends regisin
         $query->andFilterWhere([
             'idRin' => $this->idRin,
             'idOrg' => $this->idOrg,
-            'nameTypeDoc' => $this->idTypDocum,
+            'typedoc.nameTypeDoc' => $this->nameTypeDoc,
             'idTypeMat' => $this->idTypeMat,
             'dateDoc' => $this->dateDoc,
             'yearDoc' => $this->yearDoc,
@@ -92,7 +92,7 @@ class RegisinSearch extends regisin
 
         $query->andFilterWhere(['like', 'aboutDoc', $this->aboutDoc])
             ->andFilterWhere(['like', 'numberIn', $this->numberIn])
-        	->andFilterWhere(['like', 'nameTypeDoc', $this->typed]) ;
+        	->andFilterWhere(['like', 'typedoc.nameTypeDoc', $this->typed]) ;
 
         return $dataProvider;
     }
