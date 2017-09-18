@@ -17,12 +17,28 @@ class RegisinSearch extends regisin
      */
 
 	public $nameTypeDoc;
+	public $nameMat;
+	public $nameOrg;
+	public $userNameOrg;
+	public $userNameRun;
 	
     public function rules()
     {
         return [
-            [['idRin', 'idOrg', 'idTypDocum', 'idTypeMat', 'yearDoc', 'idUserRun', 'idUserOrg', 'listNumber', 'countList'], 'integer'],
-            [['aboutDoc', 'dateDoc', 'dateIn', 'numberIn','typed.nameTypeDoc','typem.nameMat','nameTypeDoc'], 'safe'],
+            [['idRin', 'idOrg', 'idTypDocum', 'idTypeMat', 'yearDoc', 'idUserRun', 'idUserOrg', 'listNumber', 'countList', 'numberDoc'], 'integer'],
+            [['aboutDoc', 
+              'dateDoc', 
+              'dateIn', 
+              'numberIn',
+              'typed.nameTypeDoc',
+              'typem.nameMat',
+              'nameTypeDoc',
+              'nameMat',
+              'org.nameOrg',
+              'nameOrg',
+              'userNameOrg',
+              'userNameRun',
+            ], 'safe'],
         ];
     }
 
@@ -48,7 +64,8 @@ class RegisinSearch extends regisin
     	
     	
     	
-        $query = regisin::find()->joinWith(['typed', 'typem']);
+        $query = regisin::find()->joinWith(['typed', 'typem', 'org', 'userr', 'usero as uorg']);
+        
    
         // add conditions that should always apply here
 
@@ -60,8 +77,17 @@ class RegisinSearch extends regisin
        						'asc'=> ['typedoc.nameTypeDoc'=>SORT_ASC],
        						'desc'=> ['typedoc.nameTypeDoc'=>SORT_DESC],
        						];
-       		
        
+       $dataProvider->sort->attributes['nameMat'] = [
+       		'asc'=> ['typemat.nameMat'=>SORT_ASC],
+       		'desc'=> ['typemat.nameMat'=>SORT_DESC],
+       ];
+       
+       $dataProvider->sort->attributes['nameOrg'] = [
+       		'asc'=> ['org.nameOrg'=>SORT_ASC],
+       		'desc'=> ['org.nameOrg'=>SORT_DESC],
+       ];
+        
         	
        // }]
 
@@ -79,7 +105,7 @@ class RegisinSearch extends regisin
         $query->andFilterWhere([
             'idRin' => $this->idRin,
             'idOrg' => $this->idOrg,
-            'typedoc.nameTypeDoc' => $this->nameTypeDoc,
+          	'numberDoc'=>$this->numberDoc,
             'idTypeMat' => $this->idTypeMat,
             'dateDoc' => $this->dateDoc,
             'yearDoc' => $this->yearDoc,
@@ -89,10 +115,13 @@ class RegisinSearch extends regisin
             'countList' => $this->countList,
             'dateIn' => $this->dateIn,
         ]);
-
+     
         $query->andFilterWhere(['like', 'aboutDoc', $this->aboutDoc])
             ->andFilterWhere(['like', 'numberIn', $this->numberIn])
-        	->andFilterWhere(['like', 'typedoc.nameTypeDoc', $this->typed]) ;
+        	->andFilterWhere(['like', 'typedoc.nameTypeDoc', $this->nameTypeDoc])
+        	->andFilterWhere(['like', 'org.nameOrg', $this->nameOrg])
+        	->andFilterWhere(['like', 'regUser.nameUser', $this->userNameOrg])
+        	->andFilterWhere(['like', 'regUser.nameUser', $this->userNameRun]);
 
         return $dataProvider;
     }

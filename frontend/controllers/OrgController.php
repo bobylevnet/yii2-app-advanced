@@ -8,6 +8,7 @@ use app\models\OrgSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\UserO;
 
 /**
  * OrgController implements the CRUD actions for Org model.
@@ -94,12 +95,12 @@ class OrgController extends Controller
     }
     
     
-    //выдает список организаций
+    //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public function actionOrglist()
     {
     	$searchModel = new \app\models\OrgSearch();
-    	$dataProvider  = $searchModel->search (Yii::$app->request->queryParams);
-    	return $this->renderPartial('_searchorg', ['dataProviderlst'=>$dataProvider]);
+    	$dataProvider  = $searchModel->search(Yii::$app->request->queryParams);    					
+     	return $this->renderPartial('_searchorg', ['dataProviderlst'=>$dataProvider]);
     	 
     }
     

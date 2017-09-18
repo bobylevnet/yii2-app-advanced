@@ -61,34 +61,41 @@ $this->params['breadcrumbs'][] = $this->title;
          'filterModel'=> $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'idRin',
-           
-            [ 'attribute'=>'idOrg',
-                'format'=>'text',
-                'filter'=>array("1"=>"open","2"=>"close")
-             ],
+            'numberDoc',
+        	'dateDoc',	
+        	[ 'attribute'=>'nameOrg',
+        		'format'=>'text',
+        		'value'=>'org.nameOrg'
+        	],
+        	'dateIn',
+        	'numberIn',
         	[ 'attribute'=>'nameTypeDoc',
         		'format'=>'text',
-        	   'value' => 'typed.nameTypeDoc',
-        			
-        			
-        			
-   			 ],
+        		'value' => 'typed.nameTypeDoc',
+        	],
+      
+           
+       
         	[ 'attribute'=>'nameMat',
         		 
         	'value' => 'typem.nameMat',
             ],
-            'idTypDocum',
             'aboutDoc',
-            // 'dateDoc',
+            'dateDoc',
             // 'yearDoc',
-            // 'idUserRun',
-            // 'idUserOrg',
-            // 'listNumber',
-            // 'countList',
-            // 'dateIn',
-            // 'numberIn',
+        	[ 'attribute' => 'userNameOrg',
+        			'format'=> 'text',
+        			'value' => 'usero.nameUser',
+			],
+        	[ 'attribute' => 'userNameRun',
+        		'format'=> 'text',
+        		'value' => 'userr.nameUser',
+        		],
+        //    'idUserRun',
+           // 'idUserOrg',
+             'listNumber',
+             'countList',
+          
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

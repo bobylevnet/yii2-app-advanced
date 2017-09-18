@@ -13,6 +13,7 @@ use Yii;
  * @property string $adresTrans
  * @property string $orgKks
  * @property string $numDog
+ * @property integer $deilevery
  */
 class Org extends \yii\db\ActiveRecord
 {
@@ -30,7 +31,8 @@ class Org extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nameOrg', 'adresMail', 'adresTrans', 'orgKks', 'numDog'], 'required'],
+            [['nameOrg', 'adresMail', 'adresTrans', 'orgKks', 'numDog', 'deilevery'], 'required'],
+            [['deilevery'], 'integer'],
             [['nameOrg', 'adresMail', 'adresTrans'], 'string', 'max' => 255],
             [['orgKks'], 'string', 'max' => 15],
             [['numDog'], 'string', 'max' => 5],
@@ -49,6 +51,7 @@ class Org extends \yii\db\ActiveRecord
             'adresTrans' => 'Adres Trans',
             'orgKks' => 'Org Kks',
             'numDog' => 'Num Dog',
+            'deilevery' => 'Deilevery',
         ];
     }
 }

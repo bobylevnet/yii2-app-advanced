@@ -34,11 +34,11 @@ use app\models\Reguser;
     //'dateFormat' => 'yyyy-MM-dd',
     ])?>
 
-    <?php //$form->field($model, 'yearDoc')->textInput() ?>
-
-    <?= $form->field($model, 'idUserRun')->dropDownList(app\models\UserO::getItems(1)) ?>
-
-    <?= $form->field($model, 'idUserOrg')->dropDownList(app\models\UserO::getItems(0)) ?>
+    <?php  //юзеры нашей организации   ?>
+	
+    <?= $form->field($model, 'idUserRun')->dropDownList(app\models\UserO::getItems(1, '=')) ?>
+	<?php //юзеры организации не нашей	?>  
+	 <?= $form->field($model, 'idUserOrg')->dropDownList(app\models\UserO::getItems(1,'>')) ?>
 
     <?= $form->field($model, 'listNumber')->textInput() ?>
 

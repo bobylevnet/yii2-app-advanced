@@ -48,4 +48,6 @@ class Typemat extends \yii\db\ActiveRecord
         $items = \yii\helpers\ArrayHelper::map(Typemat::find()->all(),'idMatDoc','nameMat');
         return $items;
     }
+    
+  
 }

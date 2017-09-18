@@ -45,12 +45,11 @@ class UserO extends \yii\db\ActiveRecord
         ];
     }
     
-    public static function getItems($id=null)
-    {
-    	
     
-    	
-    		$items = \yii\helpers\ArrayHelper::map(UserO::find()->where(['>', 'idOrg', $id])->all(),'idUser','nameUser') ;
+    //возвращем значение для dropdownlist
+    public static function getItems($id=null,$z)
+    {
+    		$items = \yii\helpers\ArrayHelper::map(UserO::find()->where([$z, 'idOrg', $id])->all(),'idUser','nameUser') ;
     		return $items;
     }
 }

@@ -40,22 +40,17 @@ class RegisinController extends Controller
        $model = new \app\models\Regisin();
        
        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           //получаем текущий год сохряняем
+
        	   $model->yearDoc = date('Y');
            $model = new \app\models\Regisin();
-        };
-        
-      //  $org= new \app\models\OrgSearch();
-       // $dataProviderlst = $org->search(Yii::$app->request->queryParams);
+        };        
+
  		$searchModel = new RegisinSearch();
     	$dataProvider  = $searchModel->search (Yii::$app->request->queryParams);
-     
-        return $this->render('index', [
+             return $this->render('index', [
             'searchModel'=>$searchModel,
             'dataProvider' =>$dataProvider,
             'model'=>$model,
-          //  'org'=>$org,
-        //    'dataProviderlst'=>$dataProviderlst,
         ]);
     }
 

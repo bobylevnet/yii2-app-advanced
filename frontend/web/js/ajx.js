@@ -71,15 +71,19 @@ var fnc= function (data) {
 
 
 function ajx(url, dt, fnc) {
-    $.ajax({
+   
+	var dataResult;
+	$.ajax({
        url: url,
        type: 'POST',    
        data: dt,
     success: function (data)    {
-        
-    fnc(data);
+        		
+    	fnc(data);    	
     }
        
 });
+	
+	
     
 }

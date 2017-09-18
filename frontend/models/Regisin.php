@@ -39,7 +39,7 @@ class Regisin extends \yii\db\ActiveRecord
         return [
             [['yearDoc', 'idRin'],'safe'],
             [['idOrg', 'idTypDocum', 'idTypeMat', 'aboutDoc', 'dateDoc','idUserRun', 'idUserOrg', 'listNumber', 'countList', 'dateIn', 'numberIn'], 'required'],
-            [['idOrg', 'idTypDocum', 'idTypeMat', 'yearDoc', 'idUserRun', 'idUserOrg', 'listNumber', 'countList'], 'integer'],
+            [['idOrg', 'idTypDocum', 'idTypeMat', 'yearDoc', 'idUserRun', 'idUserOrg', 'listNumber', 'countList','numberDoc'], 'integer'],
             [['dateDoc', 'dateIn', 'nameTypeDoc'], 'safe'],
             [['aboutDoc'], 'string', 'max' => 255],
             [['numberIn'], 'string', 'max' => 150],
@@ -52,7 +52,6 @@ class Regisin extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idRin' => 'Id Rin',
             'idOrg' => 'Id Org',
             'typeDoc' => 'Id Typ Docum',
             'idTypeMat' => 'Id Type Mat',
@@ -65,6 +64,7 @@ class Regisin extends \yii\db\ActiveRecord
             'countList' => 'Count List',
             'dateIn' => 'Date In',
             'numberIn' => 'Number In',
+        	'numberDoc' => 'Number Doc'
         	
     
         ];
@@ -83,4 +83,29 @@ class Regisin extends \yii\db\ActiveRecord
     	return $this->hasOne(Typemat::className(),['idMatDoc'=>'idTypeMat'] );
     
     }
+    
+    //связь с наменование организации
+    public function getOrg()
+    {
+    	return $this->hasOne(Org::className(),['idOrg'=>'idOrg'] );
+    
+    }
+    
+    
+    //связь пользователь исполнитель
+    public function getUserr()
+    {
+    	return $this->hasOne(UserO::className(),['idUser'=>'idUserRun'] );
+    
+    }
+    
+    
+    //связь пользователь организация
+    public function getUsero()
+    {
+    	return $this->hasOne(UserO::className(),['idUser'=>'idUserOrg'] );
+    
+    }
+    
+    
 }
