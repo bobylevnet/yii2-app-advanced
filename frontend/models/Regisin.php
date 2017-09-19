@@ -21,7 +21,7 @@ use Yii;
  * @property string $dateIn
  * @property string $numberIn
  */
-class Regisin extends \yii\db\ActiveRecord
+class Regisin extends \app\models\RelationHelper
 {
     /**
      * @inheritdoc
@@ -37,7 +37,7 @@ class Regisin extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['yearDoc', 'idRin'],'safe'],
+            [['yearDoc', 'idRin', 'idRout'],'safe'],
             [['idOrg', 'idTypDocum', 'idTypeMat', 'aboutDoc', 'dateDoc','idUserRun', 'idUserOrg', 'listNumber', 'countList', 'dateIn', 'numberIn'], 'required'],
             [['idOrg', 'idTypDocum', 'idTypeMat', 'yearDoc', 'idUserRun', 'idUserOrg', 'listNumber', 'countList','numberDoc'], 'integer'],
             [['dateDoc', 'dateIn', 'nameTypeDoc'], 'safe'],
@@ -72,7 +72,7 @@ class Regisin extends \yii\db\ActiveRecord
     
     
     //свзяь с тип документа
-    public function getTyped()
+   /* public function getTyped()
     {
     	return $this->hasOne(Typedoc::className(),['idTypDoc'=>'idTypDocum'] );
     	
@@ -105,7 +105,7 @@ class Regisin extends \yii\db\ActiveRecord
     {
     	return $this->hasOne(UserO::className(),['idUser'=>'idUserOrg'] );
     
-    }
+    }*/
     
     
 }

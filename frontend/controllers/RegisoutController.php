@@ -3,19 +3,17 @@
 namespace frontend\controllers;
 
 use Yii;
-use app\models\regisin;
-use app\models\RegisinSearch;
-use yii\data\ActiveDataProvider;
+use app\models\regisout;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\RegisoutSearch;
 use app\models\MaxNumber;
 
-
 /**
- * RegisinController implements the CRUD actions for regisin model.
+ * RegisoutController implements the CRUD actions for regisout model.
  */
-class RegisinController extends Controller
+class RegisoutController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,32 +31,32 @@ class RegisinController extends Controller
     }
 
     /**
-     * Lists all regisin models.
+     * Lists all regisout models.
      * @return mixed
      */
     public function actionIndex()
     {
-       $model = new \app\models\Regisin();     
-     
-       
-       if ($model->load(Yii::$app->request->post())) {
-       		$model->numberDoc = MaxNumber::getMax($model);
-       	   $model->yearDoc = date('Y');
-       	   $model->save();
-       	   $model = new \app\models\Regisin();
-        };        
+    	   	
+    	$model = new \app\models\Regisout();    
 
- 		$searchModel = new RegisinSearch();
-    	$dataProvider  = $searchModel->search (Yii::$app->request->queryParams);
-             return $this->render('index', [
-            'searchModel'=>$searchModel,
-            'dataProvider' =>$dataProvider,
-            'model'=>$model,
+    	if ($model->load(Yii::$app->request->post())) {
+    		$model->numberDoc = MaxNumber::getMax($model);
+    		$model->yearDoc = date('Y');	
+    		$model->save();
+    		$model = new \app\models\Regisout();
+    	};
+    	
+        $searchModel = new RegisoutSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        	'model' => $model,
         ]);
     }
 
     /**
-     * Displays a single regisin model.
+     * Displays a single regisout model.
      * @param string $id
      * @return mixed
      */
@@ -70,34 +68,16 @@ class RegisinController extends Controller
     }
 
     /**
-     * Creates a new regisin model.
+     * Creates a new regisout model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    
-
-    
-   
-
-
     public function actionCreate()
     {
-        if (Yii::$app->request->getIsPjax())
-        {
-            $searchModel = new \app\models\OrgSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            return $this->render('create', [
-            'searchModel'=>$searchModel,
-            'dataProvider' => $dataProvider,
-            
-        ]);
-            
-        }
-        
-        $model = new regisin();
+        $model = new regisout();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idRin]);
+            return $this->redirect(['view', 'id' => $model->idRout]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -106,7 +86,7 @@ class RegisinController extends Controller
     }
 
     /**
-     * Updates an existing regisin model.
+     * Updates an existing regisout model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -116,7 +96,7 @@ class RegisinController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idRin]);
+            return $this->redirect(['view', 'id' => $model->idRout]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -125,7 +105,7 @@ class RegisinController extends Controller
     }
 
     /**
-     * Deletes an existing regisin model.
+     * Deletes an existing regisout model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -138,15 +118,15 @@ class RegisinController extends Controller
     }
 
     /**
-     * Finds the regisin model based on its primary key value.
+     * Finds the regisout model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return regisin the loaded model
+     * @return regisout the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = regisin::findOne($id)) !== null) {
+        if (($model = regisout::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

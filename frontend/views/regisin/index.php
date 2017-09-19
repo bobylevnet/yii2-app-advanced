@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -13,24 +12,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="regisin-create">
 
-    
-		
-    
     <?php 
     $this->registerJsFile('@web/js/_pjax.js', ['depends'=>'yii\web\JqueryAsset']);
     
     $this->registerJs("$('document').ready( function() {
-      $('#new_row').on('pjax:end', function () {
+      $('#new_row').on('pjax:end', function() {
        $.pjax.reload({container: '#grid'});
        });
     });");
-    
-    // $this->registerJs("$('document').ready( function() {
-     // $('#searorg').on('pjax:end', function () {
-     //  $.pjax.reload({container: '#list'});
-    //   });
-   // });");
-     
+
     ?>
     
     
@@ -39,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Html::input('text','find', '' ,['id'=>'find']); ?>
     
     <div id="searorg">
-    </div>
+    </div> 
     
     <?= $this->render('_form', [
         'model' => $model,
@@ -73,16 +63,13 @@ $this->params['breadcrumbs'][] = $this->title;
         		'format'=>'text',
         		'value' => 'typed.nameTypeDoc',
         	],
-      
-           
-       
-        	[ 'attribute'=>'nameMat',
-        		 
+          
+        	[ 'attribute'=>'nameMat',     		 
         	'value' => 'typem.nameMat',
             ],
             'aboutDoc',
             'dateDoc',
-            // 'yearDoc',
+         
         	[ 'attribute' => 'userNameOrg',
         			'format'=> 'text',
         			'value' => 'usero.nameUser',
@@ -91,8 +78,6 @@ $this->params['breadcrumbs'][] = $this->title;
         		'format'=> 'text',
         		'value' => 'userr.nameUser',
         		],
-        //    'idUserRun',
-           // 'idUserOrg',
              'listNumber',
              'countList',
           

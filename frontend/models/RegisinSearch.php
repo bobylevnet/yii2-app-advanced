@@ -73,6 +73,7 @@ class RegisinSearch extends regisin
             'query' => $query,
         ]);
         
+        
        $dataProvider->sort->attributes['nameTypeDoc'] = [
        						'asc'=> ['typedoc.nameTypeDoc'=>SORT_ASC],
        						'desc'=> ['typedoc.nameTypeDoc'=>SORT_DESC],
@@ -87,6 +88,16 @@ class RegisinSearch extends regisin
        		'asc'=> ['org.nameOrg'=>SORT_ASC],
        		'desc'=> ['org.nameOrg'=>SORT_DESC],
        ];
+       
+       $dataProvider->sort->attributes['userNameRun'] = [
+       		'asc'=> ['reguser.nameUser'=>SORT_ASC],
+       		'desc'=> ['reguser.nameUser'=>SORT_DESC],
+       ];
+       $dataProvider->sort->attributes['userNameOrg'] = [
+       		'asc'=> ['reguser.nameUser'=>SORT_ASC],
+       		'desc'=> ['reguser.nameUser'=>SORT_DESC],
+       ];
+       
         
         	
        // }]
