@@ -1,8 +1,9 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
+use frontend\models\RelationHelper;
 
 /**
  * This is the model class for table "regisin".
@@ -21,7 +22,7 @@ use Yii;
  * @property string $dateIn
  * @property string $numberIn
  */
-class Regisin extends \app\models\RelationHelper
+class Regisin extends RelationHelper
 {
     /**
      * @inheritdoc
@@ -70,42 +71,6 @@ class Regisin extends \app\models\RelationHelper
         ];
     }
     
-    
-    //свзяь с тип документа
-   /* public function getTyped()
-    {
-    	return $this->hasOne(Typedoc::className(),['idTypDoc'=>'idTypDocum'] );
-    	
-    }
-    //связь с тип материала документа
-    public function getTypem()
-    {
-    	return $this->hasOne(Typemat::className(),['idMatDoc'=>'idTypeMat'] );
-    
-    }
-    
-    //связь с наменование организации
-    public function getOrg()
-    {
-    	return $this->hasOne(Org::className(),['idOrg'=>'idOrg'] );
-    
-    }
-    
-    
-    //связь пользователь исполнитель
-    public function getUserr()
-    {
-    	return $this->hasOne(UserO::className(),['idUser'=>'idUserRun'] );
-    
-    }
-    
-    
-    //связь пользователь организация
-    public function getUsero()
-    {
-    	return $this->hasOne(UserO::className(),['idUser'=>'idUserOrg'] );
-    
-    }*/
     
     
 }

@@ -11,7 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -37,14 +37,20 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+    		
+    
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
+        		'class' => 'yii\web\UrlManager',
+        		'enablePrettyUrl' => true,
+        	    //'enableStrictParsing' => false,
+        		'showScriptName' => false,
+        		
+        		/*'rules' => [
+        		    '<controller:\w+>/<action:\w+>'=> '<controller>/<action>'
+        		 ],*/		
+        		
         ],
-        */
+        
     ],
     'params' => $params,
 ];

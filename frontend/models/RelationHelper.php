@@ -1,8 +1,14 @@
 <?php  
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
+use common\models\Typedoc;
+
+use common\models\Typemat;
+
+use common\models\Org;
+use common\models\Reguser;
 //устанавливаем связи со справочными таблицами
 
 class RelationHelper extends \yii\db\ActiveRecord
@@ -32,7 +38,7 @@ class RelationHelper extends \yii\db\ActiveRecord
 	//связь пользователь исполнитель
 	public function getUserr()
 	{
-		return $this->hasOne(UserO::className(),['idUser'=>'idUserRun'] );
+		return $this->hasOne(Reguser::className(),['idUser'=>'idUserRun'] );
 	
 	}
 	
@@ -40,7 +46,7 @@ class RelationHelper extends \yii\db\ActiveRecord
 	//связь пользователь организация
 	public function getUsero()
 	{
-		return $this->hasOne(UserO::className(),['idUser'=>'idUserOrg'] );
+		return $this->hasOne(Reguser::className(),['idUser'=>'idUserOrg'] );
 	
 	}
 }

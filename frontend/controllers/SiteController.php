@@ -16,11 +16,11 @@ use frontend\models\ContactForm;
 use frontend\models\UploadFormExcel;
 use frontend\models\ExcelModel;
 use yii\web\UploadedFile;
-use frontend\component\bobyii2excel\ExcelReader;
+use common\component\bobyii2excel\ExcelReader;
 use yii\data\ActiveDataProvider;
-use app\models\Files;
-use app\models\Dataexcel;
-use app\models\Templatelist;
+use frontend\models\Files;
+use frontend\models\Dataexcel;
+use frontend\models\Templatelist;
 
 
 
@@ -92,7 +92,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+  /*  public function actionIndex()
     { 	
     	$model = new UploadFormExcel();
     	if (Yii::$app->request->isPost){
@@ -149,7 +149,7 @@ class SiteController extends Controller
 
     public function actionGet()
     {
-        //отключаем проверку токена
+     
     
         $idBills=0;
         $idBillsf=0;
@@ -201,7 +201,7 @@ class SiteController extends Controller
 
         }
          return $str;
-    }
+    }*/
 
 
         /**
@@ -265,21 +265,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionTemplate()
-    {
-      
-       $dataProvider =  new ActiveDataProvider([
-            'query' =>  Files::find(),
-              'pagination' => [
-                'pageSize' => 10,
-            ],
-        ]);
-       
-       $templateList  = Templatelist::find()->select(['id', 'nametemplate'])->asArray()->all();
-       $model = new Templatelist();
-       
-        return $this->render('template',['listDataProvider'=>$dataProvider,'templateList'=>$templateList,'model'=>$model]);
-    }
+    
 
     /**
      * Signs user up.

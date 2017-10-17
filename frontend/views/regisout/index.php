@@ -11,14 +11,19 @@ $this->title = 'Regisouts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+     
+     
+     
 
- <div id="searorg">
-    </div> 
-    
+
+
+ <?= $this->render('@app/views/findOrg')?>
+ 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
 
+    
 
 
 
@@ -30,29 +35,39 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Regisout', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+      <?php     \yii\widgets\Pjax::begin(['id'=>'grid'])?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'columns' => [
+         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'idRout',
-            'idOrg',
-            'idTypDocum',
-            'idTypeMat',
+            'numberDoc',
+        	'dateDoc',	
+        	[ 'attribute'=>'nameOrg',
+        		'format'=>'text',
+        		'value'=>'org.nameOrg'
+        	],
+          
+        	[ 'attribute'=>'nameMat',     		 
+        	'value' => 'typem.nameMat',
+            ],
             'aboutDoc',
-            // 'dateDoc',
-            // 'numberDoc',
-            // 'yearDoc',
-            // 'idUserRun',
-            // 'idUserOrg',
-            // 'senderType',
-            // 'senderDate',
-            // 'returnDate',
-            // 'listNumber',
-            // 'countList',
-
+            'dateDoc',
+         
+        	[ 'attribute' => 'userNameOrg',
+        			'format'=> 'text',
+        			'value' => 'usero.nameUser',
+			],
+        	[ 'attribute' => 'userNameRun',
+        		'format'=> 'text',
+        		'value' => 'userr.nameUser',
+        		],
+             'listNumber',
+             'countList',
+          
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    
+    <?php \yii\widgets\Pjax::end();?>
 </div>

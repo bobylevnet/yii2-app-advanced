@@ -3,12 +3,12 @@
 namespace frontend\controllers;
 
 use Yii;
-use app\models\Org;
-use app\models\OrgSearch;
+use common\models\Org;
+use common\models\OrgSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\UserO;
+use frontend\models\UserO;
 
 /**
  * OrgController implements the CRUD actions for Org model.
@@ -37,7 +37,7 @@ class OrgController extends Controller
     public function actionIndex()
     {
         $searchModel = new OrgSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+       $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -98,7 +98,7 @@ class OrgController extends Controller
     //������ ������ �����������
     public function actionOrglist()
     {
-    	$searchModel = new \app\models\OrgSearch();
+    	$searchModel = new OrgSearch();
     	$dataProvider  = $searchModel->search(Yii::$app->request->queryParams);    					
      	return $this->renderPartial('_searchorg', ['dataProviderlst'=>$dataProvider]);
     	 

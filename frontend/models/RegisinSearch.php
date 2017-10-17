@@ -1,16 +1,16 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\regisin;
+use frontend\models\regisin;
 
 /**
  * RegisinSearch represents the model behind the search form about `app\models\regisin`.
  */
-class RegisinSearch extends regisin
+class RegisinSearch extends Regisin
 {
     /**
      * @inheritdoc
@@ -64,15 +64,18 @@ class RegisinSearch extends regisin
     	
     	
     	
-        $query = regisin::find()->joinWith(['typed', 'typem', 'org', 'userr', 'usero as uorg']);
+        $query = regisin::find();
         
-   
+        $query = regisin::find()->joinWith(['typed', 'typem', 'org', 'userr', 'usero as uorg']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+        	
         ]);
         
+        
+        $dataProvider->pagination->pageSize = 10;
         
        $dataProvider->sort->attributes['nameTypeDoc'] = [
        						'asc'=> ['typedoc.nameTypeDoc'=>SORT_ASC],

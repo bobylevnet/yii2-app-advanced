@@ -2,10 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\models\Typedoc;
-use app\models\Reguser;
-  
-
+use frontend\models\Typedoc;
+use frontend\models\Reguser;
+use frontend\models\Typemat;
+use common\models\UserO;
 /* @var $this yii\web\View */
 /* @var $model app\models\regisin */
 /* @var $form yii\widgets\ActiveForm */
@@ -21,32 +21,31 @@ use app\models\Reguser;
     <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
 
 
-    <?= $form->field($model, 'idOrg')->hiddenInput() ?>
+    <?= $form->field($model, 'idOrg')->hiddenInput(['id' => 'reg-idorg']) ?>	
 
-    <?= $form->field($model, 'idTypDocum')->dropDownList(app\models\Typedoc::getItems()) ?>
+    <?= $form->field($model, 'idTypDocum')->dropDownList(common\models\Typedoc::getItems()) ?>
 
-    <?= $form->field($model, 'idTypeMat')->dropDownList(app\models\Typemat::getItems())  ?>
+    <?= $form->field($model, 'idTypeMat')->dropDownList(common\models\Typemat::getItems())  ?>
 
     <?= $form->field($model, 'aboutDoc')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'dateDoc')->widget(yii\jui\DatePicker::classname(),  [
-    //'language' => 'ru',
-    //'dateFormat' => 'yyyy-MM-dd',
+    			'dateFormat' => 'yyyy-MM-dd',
     ])?>
 
     <?php  //юзеры нашей организации   ?>
 	
-    <?= $form->field($model, 'idUserRun')->dropDownList(app\models\UserO::getItems(1, '=')) ?>
+    <?= $form->field($model, 'idUserRun')->dropDownList(Reguser::getItems(1, '=')) ?>
 	<?php //юзеры организации не нашей	?>  
-	 <?= $form->field($model, 'idUserOrg')->dropDownList(app\models\UserO::getItems(1,'>')) ?>
+	 <?= $form->field($model, 'idUserOrg')->dropDownList(Reguser::getItems(0, '='), ['id' =>'userorg']) ?>
 
     <?= $form->field($model, 'listNumber')->textInput() ?>
 
     <?= $form->field($model, 'countList')->textInput() ?>
 
-<?= $form->field($model, 'dateIn')->widget(yii\jui\DatePicker::classname(), [
-    //'language' => 'ru',
-    //'dateFormat' => 'yyyy-MM-dd',
+	<?= $form->field($model, 'dateIn')->widget(yii\jui\DatePicker::classname(), [
+			'dateFormat' => 'yyyy-MM-dd',
+
 ]) ?>
 
     <?= $form->field($model, 'numberIn')->textInput(['maxlength' => true]) ?>

@@ -1,5 +1,5 @@
 <?php
-namespace app\models;
+namespace frontend\models;
 
 class MaxNumber
 {

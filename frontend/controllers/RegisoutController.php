@@ -3,12 +3,12 @@
 namespace frontend\controllers;
 
 use Yii;
-use app\models\regisout;
+use frontend\models\regisout;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\RegisoutSearch;
-use app\models\MaxNumber;
+use frontend\models\RegisoutSearch;
+use frontend\models\MaxNumber;
 
 /**
  * RegisoutController implements the CRUD actions for regisout model.
@@ -37,13 +37,13 @@ class RegisoutController extends Controller
     public function actionIndex()
     {
     	   	
-    	$model = new \app\models\Regisout();    
+    	$model = new Regisout();    
 
     	if ($model->load(Yii::$app->request->post())) {
     		$model->numberDoc = MaxNumber::getMax($model);
     		$model->yearDoc = date('Y');	
     		$model->save();
-    		$model = new \app\models\Regisout();
+    		$model = new Regisout();
     	};
     	
         $searchModel = new RegisoutSearch();

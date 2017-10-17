@@ -12,7 +12,9 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="regisin-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
+	<?= $this->render('@app/views/findOrg')?>
+ 
 
     <?= $this->render('_form', [
         'model' => $model,

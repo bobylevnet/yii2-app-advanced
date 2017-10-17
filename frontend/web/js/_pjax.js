@@ -21,22 +21,28 @@ $('document').ready(
 				var z = $(this).find('input').val();
 				var userList='';
 				var userArr='';
-    			$('#regisin-idorg').val(z);
+    			$('#reg-idorg').val(z);
     		    $('#find').val(	$(this).find('span').text());
+    		    
+    		    var path =  location.pathname.toString();
+    		    //проверяем если мы на входящих тогда нужен запрос на заполнения листа с юзерами предприятия
+    		  //  if (path.indexOf("regisin")>0)
+    		   // {
     		    
     		    //функция заполнения dropdownlist  		    
     		    var fillDropDownList = function (data) {
+    		    	$('#userorg').html('');	
     		    	$.each(data, function (index, value) {
         		    	//заполянем список людей из организации от куда письмо
-        		    	$('#regisin-iduserorg').html(
+        		    	$('#userorg').append(
         		    			$('<option></option>').val(value.idUser).html(value.nameUser)
         		    			);
         		    });
-    		    }
-
-    		    //делаем запром на получение списка рук. выбранной организации
-    		    ajx('http://'+ window.location.host  + '/user/jsuser?idOrg='+z, '' , fillDropDownList );
+    		     //  }
     		    
+    		    //делаем запром на получение списка рук. выбранной организации
+    		    };
+    		    ajx(window.location.protocol + '/user/jsuser?idOrg='+z, '' , fillDropDownList );
     		   
     		    
     		

@@ -3,13 +3,14 @@
 namespace frontend\controllers;
 
 use Yii;
-use app\models\regisin;
-use app\models\RegisinSearch;
+use frontend\models\regisin;
+use  frontend\models\RegisinSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\MaxNumber;
+use frontend\models\MaxNumber;
+use common\models\OrgSearch;
 
 
 /**
@@ -38,14 +39,15 @@ class RegisinController extends Controller
      */
     public function actionIndex()
     {
-       $model = new \app\models\Regisin();     
+       $model = new   Regisin();     
      
        
        if ($model->load(Yii::$app->request->post())) {
-       		$model->numberDoc = MaxNumber::getMax($model);
+      	 //выбирем максимальное число регистрационого номера
+       	   $model->numberDoc = MaxNumber::getMax($model);
        	   $model->yearDoc = date('Y');
        	   $model->save();
-       	   $model = new \app\models\Regisin();
+       	   $model = new Regisin();
         };        
 
  		$searchModel = new RegisinSearch();
@@ -84,7 +86,7 @@ class RegisinController extends Controller
     {
         if (Yii::$app->request->getIsPjax())
         {
-            $searchModel = new \app\models\OrgSearch();
+            $searchModel = new OrgSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->render('create', [
             'searchModel'=>$searchModel,
