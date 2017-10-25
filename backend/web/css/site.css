@@ -9,13 +9,13 @@ body {
  # border: 2px dashed #000;
 }
 .back{
-	z-index: -1;
+#	z-index: -1;
 }
 
 #dropElement
 {
 	border: 2px dashed #000;
-	width: 800px;
+	width: 300px;
 	height: 200px;
 }
 .column-insert {

@@ -2,11 +2,14 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use frontend\models\MaxNumber;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Regisins';
+$this->title = 'Входящие док.';
+
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -15,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
      
      
 
-
+<?= Html::label('Следующий номер '. MaxNumber::getMax($model));?>
 
  <?= $this->render('@app/views/findOrg')?>
  
@@ -42,8 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
          'filterModel'=> $searchModel,
+    	
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    
+        	['class' => 'yii\grid\SerialColumn'],
             'numberDoc',
         	'dateDoc',	
         	[ 'attribute'=>'nameOrg',

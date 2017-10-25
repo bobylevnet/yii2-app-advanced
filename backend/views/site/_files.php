@@ -16,7 +16,7 @@ use yii\widgets\Pjax;
     <?= Html::a('Показать','#',['name','id'=>$model->id]) ?>
    
 
-		<div class="column"> </div>
+		<div class="column" id=<?=$key . 'column'?>> </div>
 
 
 </div>

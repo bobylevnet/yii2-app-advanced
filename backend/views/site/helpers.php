@@ -1,9 +1,10 @@
 <?php
-use app\component\ListTable;
+use backend\component\ListTable;
 use yii\base\Widget;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use common\models\iRelation;
+use backend\component\ListData;
 
 //use frontend\models\Typesender;
 ?>
@@ -12,7 +13,7 @@ use common\models\iRelation;
  	
 //пердаю выбранный класс (таблицу)
 
-echo  ListTable::widget(['selected' => $model::className()]);
+echo  ListTable::widget(['name'=>'table','items'=>ListData::getDatahelpers() ,'selected' => $model::className(), 'id'=>'helpDrop']);
 
 ?>
 <div id="result"> </div>
@@ -57,6 +58,8 @@ if (is_object($model)){
 	echo Html::hiddenInput('table', $model::className());
 	//скрыое поле с аттрибутами таблицы(модели)
 	echo Html::hiddenInput('keymodel', json_encode($model->attributes));
+	
+	
 	
 	//$arr = $model->attributes;
 	//поля модели

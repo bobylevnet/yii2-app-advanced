@@ -2,19 +2,20 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use frontend\models\MaxNumber;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\Regisout */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Regisouts';
+$this->title = 'Исходящие док.';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
      
      
      
-
+<?= Html::label('Следующий номер '. MaxNumber::getMax($model));?>
 
 
  <?= $this->render('@app/views/findOrg')?>

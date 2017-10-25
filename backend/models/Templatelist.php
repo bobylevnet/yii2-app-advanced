@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -42,11 +42,17 @@ class Templatelist extends \yii\db\ActiveRecord
         ];
     }
     
+    public function Fields()
+    {
+    
+    	$fields = parent::attributes();
+    	return $fields;
+    }
 
     public static function getItems($id=null)
     {
     
-    	return $items = \yii\helpers\ArrayHelper::map(Templatelist::find()->all(),'id','nametemplate');
+    	return $items = \yii\helpers\ArrayHelper::map(Templatelist::find()->all(),'model','nametemplate');
     	
     }
 }

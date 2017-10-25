@@ -22,8 +22,9 @@ $('document').ready(
 				var userList='';
 				var userArr='';
     			$('#reg-idorg').val(z);
+    			
     		    $('#find').val(	$(this).find('span').text());
-    		    
+    		    $('.list-view').remove();
     		    var path =  location.pathname.toString();
     		    //проверяем если мы на входящих тогда нужен запрос на заполнения листа с юзерами предприятия
     		  //  if (path.indexOf("regisin")>0)

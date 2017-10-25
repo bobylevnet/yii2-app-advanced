@@ -15,17 +15,20 @@ foreach ($model as $key=>$value)
     {
     	
     Draggable::begin([
-    			'clientOptions' => [
-    					['revert'=>'invalid'	]],
+    			'clientOptions' => ['revert'=>'invalid'],
     			'id' => $model->id .'-'. $key,
     			
     	
     			//"clientEvents" => [ "drop" => "function (event, ui) { alert(ui); }"],
     	]);
     
-      echo "<div class='drop'>"; 
-      echo  \yii\bootstrap\Html::label($model[$key]);
-      echo   "</br>";
+      echo "<div class='drop'>";
+      
+      echo \yii\bootstrap\Html::input('hidden',$key,$value);
+      
+      echo  \yii\bootstrap\Html::label($value);
+
+      //echo   "</br>";
       echo "</div>";
       Draggable::end();
       

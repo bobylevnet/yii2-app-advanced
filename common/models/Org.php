@@ -40,12 +40,12 @@ class Org extends \yii\db\ActiveRecord  implements iRelation
     public function rules()
     {
         return [
-            [['nameOrg', 'adresMail', 'adresTrans', 'orgKks', 'numDog', 'deilevery'], 'required'],
+            [['nameOrg'], 'required'],
             [['deilevery'], 'integer'],
         	[['nameOrg', 'adresMail', 'adresTrans'], 'string', 'max' => 255],
             [['orgKks'], 'string', 'max' => 15],
-            [['numDog'], 'string', 'max' => 5],
-        	[['sendertype.typeSender','typeSender'], 'safe'],
+            [['numDog'], 'string', 'max' => 30],
+        	[['sendertype.typeSender','typeSender' , 'adresTrans', 'orgKks', 'numDog'], 'safe'],
         ];
 
     }
@@ -106,7 +106,7 @@ class Org extends \yii\db\ActiveRecord  implements iRelation
     {
         return [
             'idOrg' => 'Id Org',
-            'nameOrg' => 'Имя органищзации',
+            'nameOrg' => 'Имя организации',
             'adresMail' => 'Почтовый адрес',
             'adresTrans' => 'Адрес транспортный',
             'orgKks' => 'ККС',

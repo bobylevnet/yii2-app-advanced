@@ -9,9 +9,10 @@ use common\models\LoginForm;
 use app\models\UploadFormExcel;	
 use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
-use app\models\Files;
-use app\models\Templatelist;
-use app\models\Dataexcel;
+use backend\models\Files;
+use backend\models\Templatelist;
+use backend\ models\Dataexcel;
+
 use common\models\OrgSearch;
 use common\models\Typemat;
 use common\models\Org;
@@ -34,7 +35,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'template', 'import','show','helpers','helperssave', 'delete'],
+                        'actions' => ['logout', 'index', 'template', 'import','show','helpers','helperssave', 'importtemplate', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -77,6 +78,7 @@ class SiteController extends Controller
     				//сохраняем новый
     				$model->load($post);
     				$model->save();
+    				$model = new $model();
     			}
     			
     		
@@ -111,9 +113,19 @@ class SiteController extends Controller
     public function actionDelete($id, $model)
     {
     	$modeld = new $model();
-    	$modeld::findOne($id)->delete();
-
-   		return $this->redirect(['helpers','model'=>$model]);
+    	$modeld  = 	$modeld::findOne($id);
+		
+		if ( strpos( $model::className(),  'Reguser')>0 )
+		{
+			$id = $modeld['idOrg'];
+			$modeld->delete();
+			return $this->redirect(['helpers','model'=>$model, 'id'=>$id]);
+		}
+   		else
+   		{
+   			$modeld->delete();
+   			return $this->redirect(['helpers','model'=>$model]);
+   		}
 
     }
  
@@ -145,6 +157,7 @@ class SiteController extends Controller
     		$request = Yii::$app->request;
     		$post = $request->post();
     		$dt = new Dataexcel();
+    	
     		$dt->insertData($post['file'], $post['cheks'],$post['basefile'],$post['comment']);
     
     	}
@@ -283,7 +296,7 @@ class SiteController extends Controller
     }
     
     
-    public function actionTemplate()
+    public function actionTemplate($model='common\models\Org')
     {
     
  
@@ -295,10 +308,32 @@ class SiteController extends Controller
     	]);
     	 
     	//$templateList  = Templatelist::find()->select(['id', 'nametemplate'])->asArray()->all();
-    	$model = new Templatelist();
-    	 
-    	return $this->render('template',['listDataProvider'=>$dataProvider,	'model'=>$model, 'keymodel'=> new Org]);
+    	//$model = new Templatelist();
+    	$model = new $model();
+    	return $this->render('template',['listDataProvider'=>$dataProvider,	'model'=>$model, 'keymodel'=> new $model]);
     }
+    
+    
+    public function actionImporttemplate()
+    {
+    	
+    	
+    	$dataTbl = new Dataexcel();
+    	
+    	
+    	
+    	$data = yii::$app->request->post();
+    	$modelTo= new $data['model'];
+    	$import = $data['import'];
+    	unset($data['model']);
+    	unset($data['import']);
+        //$data = json_decode($data);
+    	
+    	$result = $dataTbl->baseIntable($modelTo, $data, $import);
+    	
+    	return $result;
+    }
+    
 }
 
 

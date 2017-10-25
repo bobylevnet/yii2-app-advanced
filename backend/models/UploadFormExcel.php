@@ -43,11 +43,7 @@ class UploadFormExcel extends Model
                   
                     }
                       $this->column  =implode($result);
-                   
-			
-                            
-                           
-                        
+                    
                     }
 		 else {
 			return false;	

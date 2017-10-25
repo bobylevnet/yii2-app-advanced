@@ -1,15 +1,21 @@
 $('#helpDrop').change(function () {
 	
+	changeParameters( this.value);
 	
+})
+
+
+
+function changeParameters(value)
+{
 	var url = window.location.href;
 	
 	var arr = url.split('?');
 	
-	arr[1] = '?model=' + this.value;
+	arr[1] = '?model=' + value;
 	
-	window.location.href = arr[0] + arr[1];
-})
-
+	window.location.href = arr[0] + arr[1];	
+}
 
 
 
@@ -46,4 +52,20 @@ function fillForm(a)
 	}	
 //	js.forEach( function (item, i, js) { alert(i);}	 );
  //  $('').
+}
+
+
+
+
+function resetCss(id, parentId)
+{
+	var append = $('#'+ id);
+	//var elem = $('.column');
+	//сбрасываем положение элемента в первоночальное
+	$('#'+id).css({'top': '0px', 'left': '0px'});
+	$('.'+ id).remove();
+	//добавялем элемент где он был раньше только в  конец
+	$('#' + parentId).append(append);
+	
+	
 }

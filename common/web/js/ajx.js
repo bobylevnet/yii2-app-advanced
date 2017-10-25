@@ -52,7 +52,7 @@ var fnc= function (data) {
                  sp.html('ГОТОВО');
             };
             
-            ajx('site/import', dt, fnc );
+            ajx('/backend/site/import', dt, fnc );
             
 
 });

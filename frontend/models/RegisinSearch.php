@@ -70,9 +70,10 @@ class RegisinSearch extends Regisin
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query->orderBy(['numberDoc'=>SORT_DESC]),
         	
-        ]);
+        		
+        ] );
         
         
         $dataProvider->pagination->pageSize = 10;

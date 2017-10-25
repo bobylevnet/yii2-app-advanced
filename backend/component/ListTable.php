@@ -1,10 +1,7 @@
 <?php
-namespace  app\component;
+namespace  backend\component;
 
-use common\models\Typedoc;
-use common\models\Typemat;
-use common\models\Org;
-use common\models\Typesender;
+
 use yii\base\Widget;
 use yii\helpers\Html;
 
@@ -12,6 +9,9 @@ use yii\helpers\Html;
 class ListTable extends Widget
 {
 	public $selected;
+	public $items;
+	public $id;
+	public $name;
 	
 	public function init()
 	{
@@ -23,17 +23,11 @@ class ListTable extends Widget
 	public function run()
 	{
 		$html = '';
-		$helpersName = [
-					   Typemat::className()  =>  'Тип носителя',
-				       Typedoc::className() => 'Тип документов' ,
-				       Org::className() => 'Организации',
-						Typesender::className() => 'Способ доставки',
-		];
-
 		
 		
 		
-		$html = $html.Html::dropDownList('table',$this->selected, $helpersName, ['id' => 'helpDrop'] );
+		
+		$html = $html.Html::dropDownList($this->name, $this->selected, $this->items, ['id' => $this->id] );
 		
 
 

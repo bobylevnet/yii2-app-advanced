@@ -43,8 +43,8 @@ class Reguser extends \yii\db\ActiveRecord implements iRelation
     {
         return [
             'idUser' => 'Id User',
-            'nameUser' => 'Name User',
-            'idOrg' => 'Id Org',
+            'nameUser' => 'Имя',
+            'idOrg' => 'Код организации',
         ];
     }
     
@@ -60,19 +60,20 @@ class Reguser extends \yii\db\ActiveRecord implements iRelation
     
     
     public static function Relation()
-    {
-    	
-
+    {   	
     	return [
     			'nameOrg' => 'orgn.nameOrg',
     			'nameOrgModel'=> 'Org',
     			'nameOrgForm'=>'idOrg',
+    			//1 Модель внешнней таблицы 2 поле для связи с данными импорта 3 поле текующий таблицы для вста
+    			'import'=>'Org.orgKKs.idOrg',
     			];
     }
     
     //связь с наменование организации
     public function getOrgn()
     {
+    	
     	return $this->hasOne(Org::className(),['idOrg'=>'idOrg'] );
     
     }

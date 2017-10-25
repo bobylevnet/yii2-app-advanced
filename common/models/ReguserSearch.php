@@ -42,9 +42,14 @@ class ReguserSearch extends Reguser
     public function search($params)
     {
     	
-    	
-        $query = Reguser::find()->where(['idOrg'=>$params['id']]);
-
+    	if (isset($params['id']))
+    	{
+      	  $query = Reguser::find()->where(['idOrg'=>$params['id']]);
+    	}
+    	else 
+    	{
+    		$query = Reguser::find();
+    	}
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

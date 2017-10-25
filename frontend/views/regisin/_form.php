@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use frontend\models\Typedoc;
-use frontend\models\Reguser;
+use common\models\Reguser;
 use frontend\models\Typemat;
 use common\models\UserO;
 /* @var $this yii\web\View */
