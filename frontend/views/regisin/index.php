@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
      
      
 
-<?= Html::label('Следующий номер '. MaxNumber::getMax($model));?>
+
 
  <?= $this->render('@app/views/findOrg')?>
  
@@ -31,15 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
     
-    
- 
-
-<div class="regisin-index">
-
+    <div class="container-fluid">
+    	<div class="row">
+    	<div class="col-lg-10 col-lg-offset-1">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Regisin', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php //Html::a('Create Regisin', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?php     \yii\widgets\Pjax::begin(['id'=>'grid'])?>
     <?= GridView::widget([
@@ -84,4 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
     <?php \yii\widgets\Pjax::end()?>
+		</div>
+	</div>
 </div>
+

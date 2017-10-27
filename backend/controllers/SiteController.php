@@ -93,16 +93,16 @@ class SiteController extends Controller
     				],
     		]);
     		$classSearch = $model::className().'Search';
-			if (class_exists($classSearch)) {
+		if (class_exists($classSearch)) {
     		$searchModel = new $classSearch();
     		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 			}
-			else 
+		else 
 			{
 				$searchModel = '';
 			}
+			
     	return $this->render('helpers', ['model' => $model, 'dataProvider' =>$dataProvider, 'searchModel' => $searchModel, 'id'=>Yii::$app->request->get('id')]);
- 
     	
     }
     

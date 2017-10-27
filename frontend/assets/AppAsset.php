@@ -21,6 +21,7 @@ class AppAsset extends AssetBundle
    public $js = [
     	
     		'js/_pjax.js',
+   			'js/eventsJq.js'
     ];
     
     

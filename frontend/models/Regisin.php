@@ -54,18 +54,21 @@ class Regisin extends RelationHelper
     {
         return [
             'idOrg' => 'Id Org',
-            'typeDoc' => 'Id Typ Docum',
-            'idTypeMat' => 'Id Type Mat',
-            'aboutDoc' => 'About Doc',
-            'dateDoc' => 'Date Doc',
+            'typeDoc' => 'Тип документа',
+            'idTypeMat' => 'Вид документа',
+            'aboutDoc' => 'О чем документ',
+            'dateDoc' => 'Дата исх',
             'yearDoc' => 'Year Doc',
-            'idUserRun' => 'Id User Run',
-            'idUserOrg' => 'Id User Org',
-            'listNumber' => 'List Number',
-            'countList' => 'Count List',
-            'dateIn' => 'Date In',
-            'numberIn' => 'Number In',
-        	'numberDoc' => 'Number Doc'
+            'idUserRun' => 'Исполнитель',
+            'idUserOrg' => 'Кому',
+            'listNumber' => 'Кол-во листов',
+            'countList' => 'Кол-во экземпляров',
+            'dateIn' => 'Дата исходящего',
+            'numberIn' => 'Номер исходящиего',
+        	'numberDoc' => 'Number Doc',
+        	'idTypDocum' => 'Тип документа',
+        	'userNameOrg' =>'От кого письмо',
+        	'userNameRun' => 'Исполнитель'
         	
     
         ];

@@ -44,7 +44,8 @@ class RegisinController extends Controller
        
        if ($model->load(Yii::$app->request->post())) {
       	 //выбирем максимальное число регистрационого номера
-       	   $model->numberDoc = MaxNumber::getMax($model);
+      	 
+       	   $model->numberDoc = MaxNumber::getMax($model, 1);
        	   $model->yearDoc = date('Y');
        	   $model->save();
        	   $model = new Regisin();

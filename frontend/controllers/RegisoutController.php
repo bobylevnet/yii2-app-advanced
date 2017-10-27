@@ -40,7 +40,7 @@ class RegisoutController extends Controller
     	$model = new Regisout();    
 
     	if ($model->load(Yii::$app->request->post())) {
-    		$model->numberDoc = MaxNumber::getMax($model);
+    		$model->numberDoc = MaxNumber::getMax($model,2);
     		$model->yearDoc = date('Y');	
     		$model->save();
     		$model = new Regisout();

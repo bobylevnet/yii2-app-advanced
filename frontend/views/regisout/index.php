@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
      
      
      
-<?= Html::label('Следующий номер '. MaxNumber::getMax($model));?>
+
 
 
  <?= $this->render('@app/views/findOrg')?>

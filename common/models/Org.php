@@ -54,20 +54,8 @@ class Org extends \yii\db\ActiveRecord  implements iRelation
     
     
    
-    public static function relation()
-    {
-    	return [
-    			
-    			'typeSender' => 'sendertype.typeSender',
-    			//имя модели класс
-    			'typeSenderModel' => 'Typesender',
-    			//верное поле для формы
-    			'typeSenderForm' => 'deilevery',
-    			//модель для отношения одна организация много записей
-    			'Org' => 'common\models\Reguser',
-    	];
-    	
-    }
+
+    
     
     
    /* public function init()
@@ -80,7 +68,20 @@ class Org extends \yii\db\ActiveRecord  implements iRelation
     	
     }*/
     
- 
+    public static function relation()
+    {
+    	return [
+    			//свзь и поле для выбора из связи
+    			'typeSender' => 'sendertype.typeSender',
+    			//имя модели класс
+    			'typeSenderModel' => 'Typesender',
+    			//верное поле для формы
+    			'typeSenderForm' => 'deilevery',
+    			//модель для отношения одна организация много записей
+    			'Org' => 'common\models\Reguser',
+    	];
+    
+    }
    public function Fields()
     {
  
