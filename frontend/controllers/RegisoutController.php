@@ -3,13 +3,13 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\regisout;
+use frontend\models\Regisout;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\RegisoutSearch;
 use frontend\models\MaxNumber;
-
+use common\models\Org;
 /**
  * RegisoutController implements the CRUD actions for regisout model.
  */
@@ -52,6 +52,7 @@ class RegisoutController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         	'model' => $model,
+             'org'=> Org::getNameOrg($model['idOrg']),
         ]);
     }
 
@@ -100,6 +101,8 @@ class RegisoutController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+            	'org'=> Org::getNameOrg($model['idOrg']),
+           
             ]);
         }
     }

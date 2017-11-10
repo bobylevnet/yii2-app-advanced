@@ -34,8 +34,8 @@ class ExcelReader
                ExcelReader::$sheet   = simplexml_load_file($this->dir . '\\xl\\worksheets\\sheet1.xml');
                 
                ExcelReader::$xlrows = ExcelReader::$sheet->sheetData->row;
-                        ExcelReader::$countRow = count(ExcelReader::$xlrows);
-                        ExcelReader::$baseName = $baseName;
+               ExcelReader::$countRow = count(ExcelReader::$xlrows);
+               ExcelReader::$baseName = $baseName;
         }
         
         
@@ -59,22 +59,22 @@ class ExcelReader
                    //проход по ячекам строки
                     foreach ($xlrow->c as $cell) {     
                     $v = (string) $cell->v;  
-                    if( $v=="343" )
-                       {
-                        echo ""; 
-                       }
+                    //if( $v=="343" )
+                     //  {
+                      //  echo ""; 
+                      // }
           //смотримс значения типа ячейки
                    if (isset($cell['t'])) {
                       $s  = array();
                      $si = ExcelReader::$strings->si[(int) $v];
             
                      // Псевдоним пространства имен
-            $si->registerXPathNamespace('n', 'http://schemas.openxmlformats.org/spreadsheetml/2006/main');
-            $node= $si->xpath('.//n:t');
+           // $si->registerXPathNamespace('n', 'http://schemas.openxmlformats.org/spreadsheetml/2006/main');
+          //  $node= $si->xpath('.//n:t');
             // значение всех узлов текст
-            foreach($node as $t) {
-                $s[] = (string) $t;
-            }
+          //  foreach($node as $t) {
+                $s[] = (string)  $si->t;
+          //  }
             $v = implode($s);
         }
         
@@ -87,7 +87,7 @@ class ExcelReader
         
       $dom = dom_import_simplexml($xlrow);
       $dom->parentNode->removeChild($dom);
-      $p = count(ExcelReader::$xlrows);
+    //  $p = count(ExcelReader::$xlrows);
        ExcelReader::$countRow = count(ExcelReader::$xlrows);
       return $arr;
        

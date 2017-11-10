@@ -100,7 +100,7 @@ class OrgController extends Controller
     {
     	$searchModel = new OrgSearch();
     	$dataProvider  = $searchModel->search(Yii::$app->request->queryParams);    					
-     	return $this->renderPartial('_searchorg', ['dataProviderlst'=>$dataProvider]);
+     	return $this->renderAjax('_searchorg', ['dataProviderlst'=>$dataProvider]);
     	 
     }
     

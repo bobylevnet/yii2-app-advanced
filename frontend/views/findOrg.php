@@ -9,7 +9,13 @@ $this->registerJs("$('document').ready( function() {
       $('#new_row').on('pjax:end', function() {
        $.pjax.reload({container: '#grid'});
        });
-    });");
+    });
+		
+		//удалем поиск организаций
+		$('body').click(function  () {
+				   $('.list-view').remove();
+			})
+		");
 
 ?>
     

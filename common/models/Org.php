@@ -133,6 +133,20 @@ class Org extends \yii\db\ActiveRecord  implements iRelation
     
     }
     
+    public static function getNameOrg($id)
+    {
+    	if (isset($id))
+    	{
+    	$org = Org::findOne($id);
+    	}
+    	else 
+    	{
+    		$org = Org::findOne(1);
+    	}
+    	
+    	return $org['nameOrg'];
+    }
+    
     public static function getItems($id=null)
     {
     if (isset($id))  {

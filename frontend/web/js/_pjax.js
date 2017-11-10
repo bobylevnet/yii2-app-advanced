@@ -23,7 +23,15 @@ $('document').ready(
 				var userArr='';
     			$('#reg-idorg').val(z);
     			
-    		    $('#find').val(	$(this).find('span').text());
+    			//берем названия организации
+    			var txtOrg = $(this).find('span').text();
+    			//вставляем в поле поиск выбранное поле 
+    		  //  $('#find').val(txtOrg);
+    		    
+    		   //инормационное поле указывает какая организация текущая
+    		    $('[for="reg-idorg"]').html('Выбрано - '+ txtOrg);
+    		    
+    		    
     		    $('.list-view').remove();
     		    var path =  location.pathname.toString();
     		    //проверяем если мы на входящих тогда нужен запрос на заполнения листа с юзерами предприятия

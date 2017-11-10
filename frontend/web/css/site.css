@@ -3,10 +3,27 @@ body {
     height: 100%;
 }
 
+.menu-find {
+	    position: absolute;
+    background: white;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    width: 50%;
+}
+
+.number-input {
+	text-align: right;
+	width: 10%;
+}
+
 #find{
 	width: 100%;
 }
 
+
+.btn-l{
+	width: 30%;
+}
 .wrap {
     min-height: 100%;
     height: auto;

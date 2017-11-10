@@ -38,6 +38,7 @@ AppAsset::register($this);
     	['label' => 'Файлы', 'url' => ['/site/files']],
     	['label' => 'Импорт', 'url' => ['/site/index']],
     	['label' => 'Шаблоны', 'url' => ['/site/template']],
+    	['label' => 'Отчеты', 'url' => ['/site/gentemp']],
        ['label' => 'Заполнение справочников', 'url' => ['/site/helpers']],
     ];
     if (Yii::$app->user->isGuest) {

@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\MaxNumber;
 use common\models\OrgSearch;
+use common\models\Org;	
 
 
 /**
@@ -52,11 +53,14 @@ class RegisinController extends Controller
         };        
 
  		$searchModel = new RegisinSearch();
+ 		$org= Org::getNameOrg($model['idOrg']);
     	$dataProvider  = $searchModel->search (Yii::$app->request->queryParams);
              return $this->render('index', [
             'searchModel'=>$searchModel,
             'dataProvider' =>$dataProvider,
             'model'=>$model,
+             'org'=>$org,
+             
         ]);
     }
 
@@ -117,12 +121,13 @@ class RegisinController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+       $org =  Org::getNameOrg($model['idOrg']);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idRin]);
+            return $this->redirect(['view', 'id' => $model->idRin,]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+            	'org'=>$org,
             ]);
         }
     }

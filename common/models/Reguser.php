@@ -81,9 +81,13 @@ class Reguser extends \yii\db\ActiveRecord implements iRelation
     
     
     //возвращем значение для dropdownlist
-    public static function getItems($id=null,$z)
+    public static function getItems($id=null,  $z)
     {
-    	$items = \yii\helpers\ArrayHelper::map(Reguser::find()->where([$z, 'idOrg', $id])->all(),'idUser','nameUser') ;
+    
+    	
+    	
+    		$items = \yii\helpers\ArrayHelper::map(Reguser::find()->where([$z, 'idOrg', $id])->all(),'idUser','nameUser') ;
+    
     	return $items;
     }
 }

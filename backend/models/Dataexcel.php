@@ -198,6 +198,8 @@ class Dataexcel extends \yii\db\ActiveRecord
 			}
 			else
 			{
+				
+				//не работает
 				$result =  $result. ' '. $modelTo[current(array_keys($modelTo->attributes))];
 			}
 		}

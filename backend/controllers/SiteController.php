@@ -16,6 +16,7 @@ use backend\ models\Dataexcel;
 use common\models\OrgSearch;
 use common\models\Typemat;
 use common\models\Org;
+use common\component\bobyii2excel2\ExcelGenTemplate;
 /**
  * Site controller
  */
@@ -35,7 +36,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'template', 'import','show','helpers','helperssave', 'importtemplate', 'delete'],
+                        'actions' => ['logout', 'index', 'template', 'import','show','helpers','helperssave', 'importtemplate', 'delete', 'gentemp'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -162,6 +163,18 @@ class SiteController extends Controller
     
     	}
     
+    }
+    
+    
+    public function actionGentemp()
+    {
+    	
+    	$genTemp = new ExcelGenTemplate();
+    	
+    	$genTemp->generateTemplate('common\template\letter');
+    	
+    	
+    	return true;
     }
     
     //показываем файлы уже загруженные

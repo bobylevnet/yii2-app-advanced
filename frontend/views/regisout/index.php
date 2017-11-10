@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
  
     <?= $this->render('_form', [
         'model' => $model,
+    	'org' => $org,
     ]) ?>
 
     
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Regisout', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php // Html::a('Create Regisout', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
       <?php     \yii\widgets\Pjax::begin(['id'=>'grid'])?>
     <?= GridView::widget([
@@ -63,6 +64,11 @@ $this->params['breadcrumbs'][] = $this->title;
         		'format'=> 'text',
         		'value' => 'userr.nameUser',
         		],
+         		
+         		[ 'attribute' => 'nameTypeSender',
+         		'format'=> 'text',
+         		'value' => 'regout.typeSender',
+         		],
              'listNumber',
              'countList',
           

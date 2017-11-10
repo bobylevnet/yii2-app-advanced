@@ -26,7 +26,7 @@ use common\models\UserO;
 			<div class="col-lg-5">
     <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
 	
-	
+	<?= $form->field($model, 'idOrg')->hiddenInput(['id' => 'reg-idorg', ])->label($org) ?>
 	
 
   
@@ -39,7 +39,8 @@ use common\models\UserO;
 
     <?= $form->field($model, 'dateDoc')->widget(yii\jui\DatePicker::classname(),  [
     			'dateFormat' => 'yyyy-MM-dd',
-    ])?>
+    		
+    ], ['class'=>'form-control'])?>
 		
 	
 		
@@ -50,26 +51,30 @@ use common\models\UserO;
     	</div>
     <div class="col-lg-5">
 	<?php //юзеры организации не нашей	?>  
-	 <?= $form->field($model, 'idUserOrg')->dropDownList(Reguser::getItems(0, '='), ['id' =>'userorg']) ?>
+	 <?= $form->field($model, 'idUserOrg')->dropDownList(Reguser::getItems($model['idOrg'],  '='), ['id' =>'userorg']) ?>
 
-    <?= $form->field($model, 'listNumber')->textInput() ?>
+    <?= $form->field($model, 'listNumber')->textInput(['class'=>'form-control field number-input']) ?>
 
-    <?= $form->field($model, 'countList')->textInput() ?>
+    <?= $form->field($model, 'countList')->textInput(['class'=>'form-control  number-input']) ?>
+
 
 	<?= $form->field($model, 'dateIn')->widget(yii\jui\DatePicker::classname(), [
-			'dateFormat' => 'yyyy-MM-dd',
-
+			'dateFormat' => 'yyyy-MM-dd'
 ]) ?>
 
-    <?= $form->field($model, 'numberIn')->textInput(['maxlength' => true]) ?>
-  <?= $form->field($model, 'idOrg')->hiddenInput(['id' => 'reg-idorg'])->label('') ?>	
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+    <?= $form->field($model, 'numberIn')->textInput(['class'=>'form-control  number-input']) ?>
+  
+</div>
+<div class="form-group">
 
+    <div class="col-lg-10">
+        <?= Html::submitButton($model->isNewRecord ? 'Зарегистрировать' : 'Изменить', ['class' => $model->isNewRecord ? 'btn btn-success center-block btn-l' : '	 btn-primary center-block btn-l']) ?>
+     </div>
+     
+    </div>
     <?php ActiveForm::end(); ?>
 <?php \yii\widgets\Pjax::end()?>
-				</div>
+				
  			</div>
 		</div>
 		

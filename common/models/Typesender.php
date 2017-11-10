@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use frontend\models\Regisin;
+use frontend\models\Regisout;
 
 /**
  * This is the model class for table "typesender".
@@ -49,6 +51,10 @@ class Typesender extends \yii\db\ActiveRecord
     	return $fields;
     }
    
+    
+    
+   
+    
     
     public static function getItems($id=null)
     {

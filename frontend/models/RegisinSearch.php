@@ -66,7 +66,7 @@ class RegisinSearch extends Regisin
     	
         $query = regisin::find();
         
-        $query = regisin::find()->joinWith(['typed', 'typem', 'org', 'userr', 'usero as uorg']);
+        $query = regisin::find()->joinWith(['typed', 'typem', 'org', 'userr', 'usero as uorg', ]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -94,6 +94,10 @@ class RegisinSearch extends Regisin
        ];
        
        $dataProvider->sort->attributes['userNameRun'] = [
+       		'asc'=> ['reguser.nameUser'=>SORT_ASC],
+       		'desc'=> ['reguser.nameUser'=>SORT_DESC],
+       ];
+       $dataProvider->sort->attributes['userNameOrg'] = [
        		'asc'=> ['reguser.nameUser'=>SORT_ASC],
        		'desc'=> ['reguser.nameUser'=>SORT_DESC],
        ];

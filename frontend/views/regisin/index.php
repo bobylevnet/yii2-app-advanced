@@ -19,11 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
      
 
 
-
  <?= $this->render('@app/views/findOrg')?>
  
     <?= $this->render('_form', [
         'model' => $model,
+    	'org' => $org,
     ]) ?>
 
 
@@ -31,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
     
-    <div class="container-fluid">
-    	<div class="row">
-    	<div class="col-lg-10 col-lg-offset-1">
+   <!--   <div class="container-fluid"> -->
+    <!-- <div class="row"> -->	
+    	<!--  <div class="col-lg-10 col-lg-offset-1"> -->
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
@@ -48,7 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
     
         	['class' => 'yii\grid\SerialColumn'],
             'numberDoc',
-        	'dateDoc',	
         	[ 'attribute'=>'nameOrg',
         		'format'=>'text',
         		'value'=>'org.nameOrg'
@@ -82,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
     <?php \yii\widgets\Pjax::end()?>
-		</div>
-	</div>
-</div>
+	<!-- </div>  -->	
+ <!-- </div> -->	
+<!-- </div>  -->
 

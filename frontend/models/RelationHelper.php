@@ -49,4 +49,8 @@ class RelationHelper extends \yii\db\ActiveRecord
 		return $this->hasOne(Reguser::className(),['idUser'=>'idUserOrg'] );
 	
 	}
+	
+	
+	
+	
 }

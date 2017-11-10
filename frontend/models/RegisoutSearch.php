@@ -19,6 +19,7 @@ class RegisoutSearch extends regisout
 	public $nameOrg;
 	public $userNameRun;
 	public $userNameOrg;
+	public $nameTypeSender;
     /**
      * @inheritdoc
      */
@@ -27,7 +28,7 @@ class RegisoutSearch extends regisout
         return [
         		        		
         		
-            [['idRout', 'idOrg', 'idTypDocum', 'idTypeMat', 'numberDoc', 'yearDoc', 'idUserRun',  'listNumber', 'countList'], 'integer'],
+            [['idRout', 'idOrg', 'idTypDocum', 'idTypeMat', 'numberDoc', 'yearDoc', 'idUserRun',  'listNumber', 'countList','idTypeSender'], 'integer'],
             [['aboutDoc', 'dateDoc', 
             		'senderDate', 
             		'returnDate',
@@ -39,6 +40,7 @@ class RegisoutSearch extends regisout
         			'nameOrg',
         			'userNameRun',
             		'userNameOrg',
+            		'nameTypeSender',
             ], 'safe'],
         ];
     }
@@ -62,7 +64,7 @@ class RegisoutSearch extends regisout
     public function search($params)
     {
         $query = regisout::find();
-        $query = regisout::find()->joinWith(['typed', 'typem', 'org', 'userr', 'usero as uorg']);
+        $query = regisout::find()->joinWith(['typed', 'typem', 'org', 'userr', 'usero as uorg', 'regout']);
         // add conditions that should always apply here
 
         
@@ -89,9 +91,9 @@ class RegisoutSearch extends regisout
         		'desc'=> ['org.nameOrg'=>SORT_DESC],
         ];
          
-        $dataProvider->sort->attributes['userNameRun'] = [
-        		'asc'=> ['reguser.nameUser'=>SORT_ASC],
-        		'desc'=> ['reguser.nameUser'=>SORT_DESC],
+        $dataProvider->sort->attributes['nameTypeSender'] = [
+        		'asc'=> ['regisout.typeSender'=>SORT_ASC],
+        		'desc'=> ['regisout.typeSender'=>SORT_DESC],
         ];
   
         
@@ -120,6 +122,7 @@ class RegisoutSearch extends regisout
             'returnDate' => $this->returnDate,
             'listNumber' => $this->listNumber,
             'countList' => $this->countList,
+        		'idTypeSender' => $this->idTypeSender,
         ]);
 
         $query->andFilterWhere(['like', 'aboutDoc', $this->aboutDoc])
@@ -127,7 +130,8 @@ class RegisoutSearch extends regisout
         ->andFilterWhere(['like', 'typedoc.nameTypeDoc', $this->nameTypeDoc])
         ->andFilterWhere(['like', 'org.nameOrg', $this->nameOrg])
         ->andFilterWhere(['like', 'regUser.nameUser', $this->userNameOrg])
-        ->andFilterWhere(['like', 'regUser.nameUser', $this->userNameRun]);
+        ->andFilterWhere(['like', 'regUser.nameUser', $this->userNameRun])
+        ->andFilterWhere(['like', 'typesender.typeSender', $this->nameTypeSender]);
 
         return $dataProvider;
     }

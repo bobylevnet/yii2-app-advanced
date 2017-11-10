@@ -4,6 +4,9 @@ namespace frontend\models;
 
 use Yii;
 use frontend\models\RelationHelper;
+use common\models\Typesender;
+use common\models\Helpmass;
+use common\models\Org;
 /**
  * This is the model class for table "regisout".
  *
@@ -20,9 +23,15 @@ use frontend\models\RelationHelper;
  * @property string $returnDate
  * @property integer $listNumber
  * @property integer $countList
+ * @property integer $idTypeSender
  */
 class Regisout extends \frontend\models\RelationHelper
 {
+    //маса вычесляемое поле
+    public $mass;
+    public $price;
+    public $adres;
+    public $numberDocList;
     /**
      * @inheritdoc
      */
@@ -38,8 +47,8 @@ class Regisout extends \frontend\models\RelationHelper
     {
         return [
             [['idOrg', 'idTypDocum', 'idTypeMat', 'aboutDoc', 'dateDoc', 'numberDoc', 'yearDoc', 'idUserOrg', 'idUserRun',  'senderDate',  'listNumber', 'countList'], 'required'],
-            [['idOrg', 'idTypDocum', 'idTypeMat', 'numberDoc', 'yearDoc', 'idUserRun',   'listNumber', 'countList'], 'integer'],
-            [['dateDoc', 'senderDate', 'returnDate'], 'safe'],
+            [['idOrg', 'idTypDocum', 'idTypeMat', 'numberDoc', 'yearDoc', 'idUserRun',   'listNumber', 'countList', 'idTypeSender'], 'integer'],
+            [['dateDoc', 'senderDate', 'returnDate', 'idTypeSender'], 'safe'],
             [['aboutDoc'], 'string', 'max' => 255],
         ];
     }
@@ -52,22 +61,87 @@ class Regisout extends \frontend\models\RelationHelper
         return [
             'idRout' => 'Id Rout',
             'idOrg' => 'Id Org',
-            'idTypDocum' => 'Id Typ Docum',
-            'idTypeMat' => 'Id Type Mat',
-            'aboutDoc' => 'About Doc',
-            'dateDoc' => 'Date Doc',
+            'idTypDocum' => 'Тип документа',
+            'idTypeMat' => 'Вид документа',
+            'aboutDoc' => 'О чем документ',
+            'dateDoc' => 'Дата документа',
             'numberDoc' => 'Number Doc',
             'yearDoc' => 'Year Doc',
-            'idUserRun' => 'Id User Run',
-        	'idUserOrg'  => 'Id User Org',
-            'senderDate' => 'Sender Date',
-            'returnDate' => 'Return Date',
-            'listNumber' => 'List Number',
-            'countList' => 'Count List',
+            'idUserRun' => 'Исполнитель',
+        	'idUserOrg'  => 'Кому',
+            'senderDate' => 'Дата отправки',
+            'returnDate' => 'Дата возврата',
+            'listNumber' => 'Кол-во листов',
+            'countList' => 'Кол-во экземпляров',
+        	'idTypeSender'=>'Тип отправки',
         	
         ];
+    }	
+    
+    public function  getCountLists( $dateBegin, $dateEnd )
+    {
+    	
+    	$resultListReg=[];
+    	
+    	$orgListBet = $this->getOrgListBetween($dateBegin, $dateEnd);
+    
+    	foreach ($orgListBet as $orgId)
+    	{
+    	
+    	//вычисляем массу
+    		$result =   Regisout::find()->select(['{{regisout}}.*','SUM(([[listNumber]] * [[countList]] * 5 + 15)) as mass'])
+    		->where(['idOrg'=>$orgId->idOrg])
+    		->andWhere(['between', 'dateDoc', $dateBegin, $dateEnd ])->all();
+    
+    	//цена письма
+    	$result['price']=Helpmass::find()->where('mass <=:mass',[':mass'=> $result[0]['mass']])->max('price');  	
+    	//адрес почтовый				
+    	$result['adres']=Org::find()->select(['adresTrans'])->where(['idOrg'=>$orgId->idOrg])->all();
+    	
+    	//список номер исходящих документов
+    	$result['numberDocList']  =  $this->getStrListNumberOrgOne($orgId->idOrg,$dateBegin, $dateEnd );
+    	$resultListReg[]= $result;
+    	
+    	}
+    	
+    	return $resultListReg;
     }
     
+    
+    
+    //список номер исходящих за период
+    public function getStrListNumberOrgOne($idorg, $dateBegin, $dateEnd)
+    {
+    	$numberDocList = Regisout::find()
+    	->select(['numberDoc'])
+    	->where(['idOrg'=>$idorg])
+    	->andWhere(['between', 'dateDoc', $dateBegin, $dateEnd ])
+    	->asArray(true);
+    	
+    	return implode($numberDocList);
+    }
+    
+    
+    
+    //список организации за период
+    public function getOrgListBetween($dateBegin, $dateEnd)
+    {
+    	 $orgPeriod =  Regisout::find()->select(['idOrg'])
+       	 ->where(['between', 'dateDoc', $dateBegin, $dateEnd ])
+    	 ->groupBy(['idOrg'])
+    	 ->all();
+    	
+    	 return $orgPeriod;
+    }
+    
+    
+    //связь с наменование организации
+    public function getRegout()
+    {
+    
+    	return $this->hasOne(Typesender::className(),['idTypeSender'=>'idTypeSender'] );
+    
+    }
     
     
 
