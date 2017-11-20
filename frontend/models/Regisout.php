@@ -89,14 +89,22 @@ class Regisout extends \frontend\models\RelationHelper
     	{
     	
     	//вычисляем массу
-    		$result =   Regisout::find()->select(['{{regisout}}.*','SUM(([[listNumber]] * [[countList]] * 5 + 15)) as mass'])
+    		$result['mass'] =   Regisout::find()->select(['{{regisout}}.*','SUM(([[listNumber]] * [[countList]] * 5 + 15)) as mass'])
     		->where(['idOrg'=>$orgId->idOrg])
-    		->andWhere(['between', 'dateDoc', $dateBegin, $dateEnd ])->all();
+    		->andWhere(['between', 'dateDoc', $dateBegin, $dateEnd ])->one()['mass'];
     
     	//цена письма
-    	$result['price']=Helpmass::find()->where('mass <=:mass',[':mass'=> $result[0]['mass']])->max('price');  	
+    	$result['price']=Helpmass::find()->where('mass <=:mass',[':mass'=> $result['mass']])->max('price');  	
     	//адрес почтовый				
-    	$result['adres']=Org::find()->select(['adresTrans'])->where(['idOrg'=>$orgId->idOrg])->all();
+    	$r =  Org::find()->select(['adresTrans'])->where(['idOrg'=>$orgId->idOrg])->all();
+    		
+    		if (count($r)!=0) {
+    			$result['adres']=$r[0]['adresTrans'];
+    		}
+    		else 
+    		{
+    			$result['adres'] = '';
+    		}
     	
     	//список номер исходящих документов
     	$result['numberDocList']  =  $this->getStrListNumberOrgOne($orgId->idOrg,$dateBegin, $dateEnd );
@@ -116,9 +124,15 @@ class Regisout extends \frontend\models\RelationHelper
     	->select(['numberDoc'])
     	->where(['idOrg'=>$idorg])
     	->andWhere(['between', 'dateDoc', $dateBegin, $dateEnd ])
-    	->asArray(true);
+    	->all();
+    	$listNumber='';
     	
-    	return implode($numberDocList);
+    	foreach($numberDocList as $oneList){
+    		
+    		$listNumber = $listNumber .  $oneList['numberDoc'] . ' ' ;
+    	}
+    	
+    	return $listNumber;
     }
     
     

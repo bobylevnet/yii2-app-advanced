@@ -169,9 +169,9 @@ class SiteController extends Controller
     public function actionGentemp()
     {
     	
-    	$genTemp = new ExcelGenTemplate();
+    	$genTemp = new ExcelGenTemplate('common\template\letter\ModelLetter','letter');
     	
-    	$genTemp->generateTemplate('common\template\letter');
+    	$genTemp->generateTemplate('common\template\letter', '2017-09-19','2017-10-27');
     	
     	
     	return true;
