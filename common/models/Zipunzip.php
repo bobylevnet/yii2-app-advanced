@@ -15,22 +15,54 @@ class Zipunzip
 	public function ArchiveFile($path, $to)
 	{
 		
-		$path= str_replace('/','\\', realpath($path) );
-		//$zip = new \ZipArchive();
-		//$zip->open($path);
+		
+		
+		$path=realpath($path);
+		
+		$zip = new \ZipArchive();
+		$path= str_replace('/','\\', $path );
+		$to= str_replace('/','\\', $to );
+		
+		$nameFile = $path.'\\'.'letter'.time().'.zip';
+
+		if ($zip->open($nameFile,\ZipArchive::CREATE)===TRUE){		
+		
+	
 	
 		
 		if (is_dir($path))
 		{
-			$path= $path. '\\';
+			$pathSource= $path. '\\';
 		$directory = new \RecursiveDirectoryIterator($path);
-		$iterator = new \RecursiveIteratorIterator($directory,  \RecursiveIteratorIterator::SELF_FIRST );
+		$files = new \RecursiveIteratorIterator($directory,  \RecursiveIteratorIterator::SELF_FIRST );
 		}
 		
 		
-		foreach ($files as $file)
+		
+		
+		foreach ($files as $name=>$file)
 		{
 			
+			
+			if (in_array(substr($name, strrpos($name,'\\')+1), array('.','..')))
+			{
+				continue;
+			}
+			
+		 if 	(is_file($name)===TRUE) {
+				
+		 	$zip->addFile($name, str_replace($pathSource, "", $name));
+			 }
+
+		}
+		
+		
+			$zip->close();
+		
+			$newName = $to.'\\fileready.xlsx';
+			rename($nameFile, $newName);
+		
+			return $newName;
 		}
 	}
 	

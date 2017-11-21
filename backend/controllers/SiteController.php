@@ -169,12 +169,20 @@ class SiteController extends Controller
     public function actionGentemp()
     {
     	
+    	
+    	
+    	if (Yii::$app->request->isPost)
+    	{
     	$genTemp = new ExcelGenTemplate('common\template\letter\ModelLetter','letter');
     	
-    	$genTemp->generateTemplate('common\template\letter', '2017-09-19','2017-10-27');
+    	$result= $genTemp->generateTemplate('common\template\letter', '2017-09-19','2017-10-27');
+    		return $this->render('showreport',['readyFile'=>$result]);
+    	}
+    	else
+    	{
+    		return $this->render('showreport',['readyFile'=>'']);
+    	}
     	
-    	
-    	return true;
     }
     
     //показываем файлы уже загруженные

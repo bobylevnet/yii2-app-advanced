@@ -37,7 +37,7 @@ AppAsset::register($this);
     $menuItems = [
     	['label' => 'Файлы', 'url' => ['/site/files']],
     	['label' => 'Импорт', 'url' => ['/site/index']],
-    	['label' => 'Шаблоны', 'url' => ['/site/template']],
+    	['label' => 'Шаблоны', 'url' => ['/site/showreport']],
     	['label' => 'Отчеты', 'url' => ['/site/gentemp']],
        ['label' => 'Заполнение справочников', 'url' => ['/site/helpers']],
     ];
