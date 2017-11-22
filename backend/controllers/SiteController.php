@@ -36,7 +36,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'template', 'import','show','helpers','helperssave', 'importtemplate', 'delete', 'gentemp'],
+                        'actions' => ['logout', 'index', 'template', 'import','show','helpers','helperssave', 'importtemplate', 'delete', 'gentemp', 'download'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -168,23 +168,33 @@ class SiteController extends Controller
     
     public function actionGentemp()
     {
+    	$post =Yii::$app->request->post();
     	
     	
-    	
-    	if (Yii::$app->request->isPost)
+    	if (Yii::$app->request->isPost && $post['report']!=null )
     	{
-    	$genTemp = new ExcelGenTemplate('common\template\letter\ModelLetter','letter');
-    	
-    	$result= $genTemp->generateTemplate('common\template\letter', '2017-09-19','2017-10-27');
-    		return $this->render('showreport',['readyFile'=>$result]);
+    		
+    		//передаем имя шаблона
+    	$genTemp = new ExcelGenTemplate($post['report']);
+    		//генерируем сам шаблон
+    	$result= $genTemp->generateTemplate('common\template\letter', $post['dateStart'],$post['dateEnd'], $post['report']);
+    		
+    	return $this->redirect(['/site/download','nameFileDownload'=>$result ]);
     	}
     	else
     	{
-    		return $this->render('showreport',['readyFile'=>'']);
+    		return $this->render('showreport');
     	}
     	
     }
     
+    
+    public function actionDownload($nameFileDownload)
+    {
+    	
+    	//$filepath = Yii::getAlias('@common').'\\'.$template.'\\'.$nameFileDownload;
+    	Yii::$app->response->sendFile($nameFileDownload);
+    }
     //показываем файлы уже загруженные
     public function actionShow()
     {

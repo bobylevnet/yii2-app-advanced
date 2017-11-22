@@ -62,7 +62,7 @@ use common\models\Typesender;
 
 
 
-</div>
+
   
   <div class="form-group">
    <div class="col-lg-10">
@@ -70,5 +70,6 @@ use common\models\Typesender;
 	</div>
     <?php ActiveForm::end(); ?>
     <?php \yii\widgets\Pjax::end()?>
+</div>
 </div>
 </div>

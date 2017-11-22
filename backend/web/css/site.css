@@ -3,7 +3,12 @@ body {
     height: 100%;
 }
 
-
+.report{
+ display: inline-block;
+ text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .column {
  # border: 2px dashed #000;

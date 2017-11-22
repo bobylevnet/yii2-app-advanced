@@ -42,8 +42,12 @@ class RegisoutController extends Controller
     	if ($model->load(Yii::$app->request->post())) {
     		$model->numberDoc = MaxNumber::getMax($model,2);
     		$model->yearDoc = date('Y');	
+    		if ($model['idTypeSender']=='0')
+    		{
+    			$model['idTypeSender']= Org::findOne(['idOrg'=>$model['idOrg']])['deilevery'];
+    		}
+    		
     		$model->save();
-    		$model = new Regisout();
     	};
     	
         $searchModel = new RegisoutSearch();

@@ -32,6 +32,12 @@ class Regisout extends \frontend\models\RelationHelper
     public $price;
     public $adres;
     public $numberDocList;
+    public $nameOrg;
+  	public $adresTrans;
+    public $dateSender;
+    
+    
+    
     /**
      * @inheritdoc
      */
@@ -116,6 +122,18 @@ class Regisout extends \frontend\models\RelationHelper
     }
     
     
+    //данные для маршрутного листа
+    public function getDataCar($dateBegin, $dateEnd)
+    {
+    
+    	 $orgPeriod =  Regisout::find()->joinWith(['org'])->select(['{{org}}.*' , 'CONCAT([[org.nameOrg]], [[org.adresTrans]], [[numberDoc]]) as adres', "(senderDate) as dateSender" ])
+    	->where(['between', 'dateDoc', $dateBegin, $dateEnd ])
+    	->andWhere(['regisout.idTypeSender'=>'2'])
+    	->all();
+    	return  $orgPeriod;
+    }
+    
+    
     
     //список номер исходящих за период
     public function getStrListNumberOrgOne($idorg, $dateBegin, $dateEnd)
@@ -142,11 +160,14 @@ class Regisout extends \frontend\models\RelationHelper
     {
     	 $orgPeriod =  Regisout::find()->select(['idOrg'])
        	 ->where(['between', 'dateDoc', $dateBegin, $dateEnd ])
+       	 ->andWhere(['idTypeSender'=>'1'])
     	 ->groupBy(['idOrg'])
     	 ->all();
     	
     	 return $orgPeriod;
     }
+    
+  
     
     
     //связь с наменование организации
