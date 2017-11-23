@@ -17,6 +17,8 @@ use common\models\OrgSearch;
 use common\models\Typemat;
 use common\models\Org;
 use common\component\bobyii2excel2\ExcelGenTemplate;
+use common\models\Reguser;
+use common\models\Userad;
 /**
  * Site controller
  */
@@ -32,7 +34,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'index', 'get'],
+                        'actions' => ['login', 'error', 'index', 'get','org'],
                         'allow' => true,
                     ],
                     [
@@ -51,6 +53,18 @@ class SiteController extends Controller
         ];
     }
 
+    
+    public function actionOrg($kks, $username)
+    {
+    	
+    	//возвращаем ид организации ид руководителя организации ид пользователя исполнителя
+    	$org= Org::find()->where(['orgKks'=>$kks])->one();
+    	$user =  Reguser::find()->where(['idOrg'=>$org['idOrg']])->one();
+    	$userRun = Userad::find()->where(['userAD'=>$username])->one();
+    	
+    	return $org['idOrg'].'.'.$user['idUser'].'.'.$userRun['idUserReg'];
+    	
+    }
     
 
     //справочники
@@ -195,6 +209,8 @@ class SiteController extends Controller
     	//$filepath = Yii::getAlias('@common').'\\'.$template.'\\'.$nameFileDownload;
     	Yii::$app->response->sendFile($nameFileDownload);
     }
+    
+    
     //показываем файлы уже загруженные
     public function actionShow()
     {

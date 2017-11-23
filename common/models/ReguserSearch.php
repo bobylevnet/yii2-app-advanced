@@ -39,6 +39,7 @@ class ReguserSearch extends Reguser
      *
      * @return ActiveDataProvider
      */
+    
     public function search($params)
     {
     	
