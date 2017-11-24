@@ -119,7 +119,12 @@ class Org extends \yii\db\ActiveRecord  implements iRelation
     
     
    
-  
+    public static function getTypeSender($idOrg)
+    {
+    	
+    	return  Org::findOne(['idOrg'=>$idOrg])['deilevery'];
+    }
+    
     
     public static function primaryKey()
     {

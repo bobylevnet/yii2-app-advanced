@@ -3,9 +3,13 @@ namespace frontend\models;
 use common\models\Numberyear;
 
 
+
+
 class MaxNumber
 {
-	//$INOUT - 1 ВХОДЯЩИЕ 2  ИСХОДЯЩИЕ
+
+		public static $maxn;
+		//$INOUT - 1 ВХОДЯЩИЕ 2  ИСХОДЯЩИЕ
 	public static function getMax($model, $INOUT)
 	{
 		
@@ -19,40 +23,20 @@ class MaxNumber
 	  	$number['numberCurrent'] = $number['numberStart'] + $number['numberCurrent'];
 	  	}
 	 
-	  	
-	  
-	  	
-	  	$number->save();
+	  	MaxNumber::$maxn=$number;
 	  	return $number['numberCurrent'];
 	 
-	 /*   $numberDoc = $model->find()
-	    ->where(['YEAR(dateDoc)'=> new \yii\db\Expression('YEAR(CURDATE())')])
-	    ->max('numberDoc')+1;
-	    
-	    
-	   	if (isset($numberStart)) 
-	   	{
-	    $result = $numberStart['numberStart'];
-	    
-	    if ($result<$numberDoc)
-	    {
-	    	$numberStart->delete();
-	    	return $numberDoc;
-	    }
-	    
-		return $result;
-	   	}*/
-		
-	   
-	   	
-	   	
-	   	//удаляем запись 
-	   
-	   	
-		//return $numberDoc;
-		// $model->find()->select('numberDoc')->max('numberDoc')+1;
+
 		
 	}
+	
+	
+	public static function save()
+	{
+		MaxNumber::$maxn->save();
+	}
+	
+	
 	
 	
 }

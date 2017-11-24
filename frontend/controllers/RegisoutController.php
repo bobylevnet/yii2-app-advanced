@@ -39,17 +39,21 @@ class RegisoutController extends Controller
     	   	
     	$model = new Regisout();    
 
-    	if ($model->load(Yii::$app->request->post())) {
-    		$model->numberDoc = MaxNumber::getMax($model,2);
-    		$model->yearDoc = date('Y');	
-    		if ($model['idTypeSender']=='0')
-    		{
-    			$model['idTypeSender']= Org::findOne(['idOrg'=>$model['idOrg']])['deilevery'];
-    		}
-    		
-    		$model->save();
-    	};
     	
+    	if (Yii::$app->request->isPost)
+    	{
+    	$post = Yii::$app->request->post();
+    	$model->load($post);
+
+ 		   //возвращаем следующий регистрационный номер
+ 		   $model->numberDoc = MaxNumber::getMax($model,2);
+ 		   $model->yearDoc = date('Y');
+ 		   
+ 		   //тип доставки устанавливаем как у организации
+ 	
+ 		   $model->save();
+ 		
+    	}
         $searchModel = new RegisoutSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
@@ -58,6 +62,42 @@ class RegisoutController extends Controller
         	'model' => $model,
              'org'=> Org::getNameOrg($model['idOrg']),
         ]);
+    }
+    //регистрация из шаблона SAP
+    public function actionRegsap()
+    {
+    	$model = new Regisout();
+    	$post = Yii::$app->request->post();
+    	if (isset($post['registerAuto']) && yii::$app->request->isPost){
+    		//загружаем модель если она из сапа
+   
+    		
+    		$model->setAttributes($post);
+    		$model->numberDoc = MaxNumber::getMax($model,2);
+    		$model->yearDoc = date('Y');
+    		
+    		if ($model['idTypeSender']=='0')
+    		{
+    			$model['idTypeSender']= Org::findOne(['idOrg'=>$model['idOrg']])['deilevery'];
+    		}
+    		
+    		
+    	    if ($model->save())
+    	    {
+    	    //сохраняем номер исходящего документа если модель сохранилась
+    	    
+    	    	MaxNumber::save();
+    		return $model->numberDoc;
+    	    }
+    	    else 
+    	    {
+    	    	
+    	    	return 'error';
+    	    }
+    		
+    	
+    	}
+    	
     }
 
     /**
